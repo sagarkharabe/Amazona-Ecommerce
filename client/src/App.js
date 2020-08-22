@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import Home from './pages/Home/Home';
-import Admin from './pages/Admin/Admin';
+import Seller from './pages/Seller/Seller';
 import NotFound from './pages/NotFound/NotFound';
 import Product from './pages/Product/Product';
 import Cart from './pages/Cart/Cart';
@@ -45,7 +45,7 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/notfound" component={NotFound} />
-          <Route path="/admin" component={Admin} />
+          <Route path="/seller" component={Seller} />
           <Route path="/product/:id" component={Product} />
           <Route path="/cart" component={Cart} />
           <Route exact path="/" component={Home} />

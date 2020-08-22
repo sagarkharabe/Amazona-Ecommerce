@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import requireAdmin from '../../hoc/requireAdmin';
+import requireSeller from '../../hoc/requireSeller';
 import Layout from '../../layout/Layout';
 import './styles.css';
 
@@ -21,4 +21,4 @@ const Admin = () => {
   );
 };
 
-export default requireAdmin(Admin);
+export default requireSeller(Admin);

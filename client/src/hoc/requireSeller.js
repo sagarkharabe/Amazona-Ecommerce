@@ -14,7 +14,7 @@ export default (ChildComponent) => {
     }
 
     shouldNavigateAway() {
-      if (!(this.props.auth.isAuthenticated && this.props.auth.me?.role === 'ADMIN')) {
+      if (!(this.props.auth.isAuthenticated && this.props.auth.me?.isSeller)) {
         this.props.history.push('/');
       }
     }
