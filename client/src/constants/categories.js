@@ -1,0 +1,15 @@
+export const categories = [
+  'Appliances',
+  'Baby Care',
+  'Beauty',
+  'Books',
+  'Cars & Bikes',
+  'Clothing & accessories',
+  'Computers & Accessories',
+  'Electronics',
+  'Kitchen',
+  'Home Improvement',
+  'Garden & Outdoors',
+  'Furniture',
+  'Software',
+];

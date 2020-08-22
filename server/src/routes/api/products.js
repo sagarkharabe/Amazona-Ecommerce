@@ -38,6 +38,8 @@ router.get('/:id', async (req, res) => {
         return res.status(200).json({ data: product })
     }
     catch (error) {
+        console.log(error)
+
         res.status(500).json({ message: 'Something went wrong.' })
     }
 })

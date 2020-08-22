@@ -1,38 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { getProducts } from '../../store/actions/productsActions';
+import ProductCard from '../../components/Product/Product';
 
 import Layout from '../../layout/Layout';
 
 import './styles.css';
 
-const Home = ({ auth }) => {
+const Home = ({ auth, products: { products }, getProducts }) => {
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   return (
     <Layout>
       <div className="home-page">
         <h1>Amazona E-Commerce</h1>
         <h2>Buy from sellers across the globe!</h2>
-        {!auth.isAuthenticated ? (
-          <div>
-            <p>
-              Welcome guest!{' '}
-              <Link className="bold" to="/login">
-                Log in
-              </Link>{' '}
-              or{' '}
-              <Link className="bold" to="/register">
-                Register
-              </Link>
-            </p>
+        <div>
+          <p>Welcome {auth.isAuthenticated ? `${auth.me.name}` : 'guest'}! </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap ' }}>
+            {products.map((product) => (
+              <ProductCard item={product} />
+            ))}
           </div>
-        ) : (
-            <>
-              <p>
-                Welcome <span className="name">{auth.me.name}</span>!
-            </p>
-            </>
-          )}
+        </div>
       </div>
     </Layout>
   );
@@ -40,6 +33,7 @@ const Home = ({ auth }) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  products: state.products,
 });
 
-export default compose(connect(mapStateToProps))(Home);
+export default compose(connect(mapStateToProps, { getProducts }))(Home);

@@ -39,14 +39,14 @@ const Navbar = ({ auth, logOutUser, history }) => {
             </li>
           </>
         ) : (
-            <>
-              <li className="flex-1" />
+          <>
+            <li className="flex-1" />
 
-              <li className="nav-item">
-                <Link to="/login">Login</Link>
-              </li>
-            </>
-          )}
+            <li className="nav-item">
+              <Link to="/login">Login</Link>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );
