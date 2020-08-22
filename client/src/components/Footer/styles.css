@@ -1,0 +1,20 @@
+.footer {
+  width: 100%;
+  background-color: lightgray;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer .footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer .username {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 10px;
+}

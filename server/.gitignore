@@ -1,0 +1,16 @@
+/node_modules
+package-lock.json
+
+/config/dev.js
+/security/cert.key
+/security/cert.pem
+#/public
+
+/.vscode
+.env
+
+!public/images
+public/images/*
+!public/images/avatar0.jpg
+!public/images/avatar1.jpg
+!public/images/avatar2.jpg

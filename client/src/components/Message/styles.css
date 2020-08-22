@@ -1,0 +1,40 @@
+.name {
+  font-size: 20px;
+  font-weight: bold;
+}
+.username,
+.time {
+  font-size: 18px;
+  margin-left: 5px;
+}
+
+.message {
+  border-bottom: 1px solid black;
+  padding: 20px 0;
+}
+.message:last-child {
+  border-bottom: 0;
+}
+
+.message .avatar {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  margin-right: 10px;
+  /* border-radius: 50%; */
+}
+
+.message .message-header {
+  display: flex;
+  align-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.message p {
+  margin: 0;
+}
+
+.message .btn {
+  width: auto;
+  margin-right: 10px;
+}

@@ -1,0 +1,14 @@
+.register {
+  display: flex;
+  justify-content: center;
+}
+
+.register .container {
+  max-width: 400px;
+  flex: 1;
+}
+
+.register .submit {
+  background-color: gray;
+  color: white;
+}

@@ -1,0 +1,27 @@
+.login {
+  display: flex;
+  justify-content: center;
+}
+
+.login .container {
+  max-width: 400px;
+  flex: 1;
+}
+
+.login .fb {
+  background-color: #3b5998;
+  color: white;
+  width: 200px;
+  display: block;
+}
+
+.login .google {
+  background-color: #dd4b39;
+  color: white;
+  width: 200px;
+  display: block;
+}
+
+.login .logins {
+  margin: 5px 0;
+}
