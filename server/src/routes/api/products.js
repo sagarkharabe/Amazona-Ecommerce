@@ -31,14 +31,11 @@ router.get('/seller', async (req, res) => {
 // get by Id
 router.get('/:id', async (req, res) => {
     try {
-        //TODO: populate comments
-        const product = await Product.findById(req.params.id).populate('seller');
+        const product = await Product.findById(req.params.id).populate('seller').populate({ path: 'comments', populate: { path: 'user' } });
         if (!product) return res.status(404).json({ message: 'Product doesn\'t exist' });
         return res.status(200).json({ data: product })
     }
     catch (error) {
-        console.log(error)
-
         res.status(500).json({ message: 'Something went wrong.' })
     }
 })
@@ -57,7 +54,6 @@ router.post('/', requireJwtAuth, async (req, res) => {
             seller: me.id,
             comments: []
         })
-        //TODO: populate comments
         product = await product.populate('seller').execPopulate()
 
         return res.status(200).json({ data: product })
@@ -85,7 +81,7 @@ router.put('/:id', requireJwtAuth, async (req, res) => {
         )
         if (!product) return res.status(404).json({ message: 'No product found.' });
         //TODO: populate ratings and comments
-        product = await product.populate('seller').execPopulate()
+        product = await product.populate('seller').populate({ path: 'comments', populate: { path: 'user' } }).execPopulate()
 
         return res.status(200).json({ data: product })
     } catch (error) {

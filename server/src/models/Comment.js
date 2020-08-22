@@ -10,20 +10,13 @@ const commentSchema = new Schema({
     type: String,
     max: 500,
     required: true,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
+  }
 },
   { timestamps: true });
 
 export const validateComment = (comment) => {
   const schema = {
-    product: Joi.object().required(),
-    user: Joi.object().required(),
-    comment: Joi.string().max(500).required(),
-    date: Joi.number(),
+    comment: Joi.string().max(500).required()
   };
   return Joi.validate(comment, schema)
 }

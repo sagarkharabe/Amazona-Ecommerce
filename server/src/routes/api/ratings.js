@@ -26,7 +26,7 @@ router.post('/:productId', requireJwtAuth, async (req, res) => {
         if (temp) return res.status(400).json({ message: 'Already rated the product.' })
 
         const product = await Product.findById(req.params.productId);
-        let rating = await Rating.create({
+        const rating = await Rating.create({
             rate: req.body.rate,
             product: product.id,
             user: req.user.id
