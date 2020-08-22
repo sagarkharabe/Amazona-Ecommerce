@@ -1,17 +1,11 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
-const { productSchema } = require('./Product');
-const { userSchema } = require('./User');
 
-const commentSchema = new mongoose.Schema({
-  productId: {
-    type: productSchema,
-    required: true,
-  },
-  userId: {
-    type: userSchema,
-    required: true,
-  },
+const { Schema } = mongoose;
+
+const commentSchema = new Schema({
+  product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   comment: {
     type: String,
     max: 500,
@@ -21,16 +15,20 @@ const commentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
+},
+  { timestamps: true });
 
-const validateComment = {
-  productId: Joi.object().required(),
-  userId: Joi.object().required(),
-  comment: Joi.string().max(500).required(),
-  date: Joi.number(),
-};
+export const validateComment = (comment) => {
+  const schema = {
+    product: Joi.object().required(),
+    user: Joi.object().required(),
+    comment: Joi.string().max(500).required(),
+    date: Joi.number(),
+  };
+  return Joi.validate(comment, schema)
+}
 
-const Comment = new mongoose.model('comment', commentSchema);
+const Comment = mongoose.model('Comment', commentSchema);
 
-exports.Comment = Comment;
-exports.validateComment = validateComment;
+export default Comment;
+

@@ -8,46 +8,44 @@ import { isValidUrl } from '../utils/utils';
 
 const { Schema } = mongoose;
 
-const userSchema = new Schema(
-  {
-    provider: {
-      type: String,
-      required: true,
-    },
-    username: {
-      type: String,
-      lowercase: true,
-      unique: true,
-      required: [true, "can't be blank"],
-      match: [/^[a-zA-Z0-9_]+$/, 'is invalid'],
-      index: true,
-    },
-    email: {
-      type: String,
-      lowercase: true,
-      unique: true,
-      required: [true, "can't be blank"],
-      match: [/\S+@\S+\.\S+/, 'is invalid'],
-      index: true,
-    },
-    password: {
-      type: String,
-      trim: true,
-      minlength: 6,
-      maxlength: 60,
-    },
-    name: String,
-    avatar: String,
-    isSeller: { type: Boolean, default: false },
-    // google
-    googleId: {
-      type: String,
-      unique: true,
-      sparse: true,
-    },
-    //TODO: Add products and comments
-    // messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
+const userSchema = new Schema({
+  provider: {
+    type: String,
+    required: true,
   },
+  username: {
+    type: String,
+    lowercase: true,
+    unique: true,
+    required: [true, "can't be blank"],
+    match: [/^[a-zA-Z0-9_]+$/, 'is invalid'],
+    index: true,
+  },
+  email: {
+    type: String,
+    lowercase: true,
+    unique: true,
+    required: [true, "can't be blank"],
+    match: [/\S+@\S+\.\S+/, 'is invalid'],
+    index: true,
+  },
+  password: {
+    type: String,
+    trim: true,
+    minlength: 6,
+    maxlength: 60,
+  },
+  name: String,
+  avatar: String,
+  isSeller: { type: Boolean, default: false },
+  // google
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true,
+  },
+  products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
+},
   { timestamps: true },
 );
 
