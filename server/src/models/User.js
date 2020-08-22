@@ -67,7 +67,6 @@ userSchema.methods.toJSON = function () {
     username: this.username,
     avatar: avatar,
     name: this.name,
-    role: this.role,
     isSeller: this.isSeller,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,

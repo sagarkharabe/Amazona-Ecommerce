@@ -37,7 +37,6 @@ const productSchema = new Schema({
   },
   image: String,
   avgRating: { type: Number, default: 0 },
-  ratings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rating' }],
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
 },
   { timestamps: true });
