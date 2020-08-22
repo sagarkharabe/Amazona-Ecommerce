@@ -1,10 +1,9 @@
 import mongoose from 'mongoose';
 import Joi from 'joi';
-const { ratingSchema } = require('./Ratings');
-const { commentSchema } = require('./Comment');
-const { userSchema } = require('./User');
 
-const productSchema = new mongoose.Schema({
+const { Schema } = mongoose;
+
+const productSchema = new Schema({
   name: {
     type: String,
     minlength: 2,
@@ -12,13 +11,13 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category',
+    type: [String],
     required: true,
   },
   seller: {
-    type: userSchema,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
   price: {
     type: Number,
@@ -53,34 +52,34 @@ const productSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  ratings: [
-    {
-      type: ratingSchema,
-    },
-  ],
-  comments: [
-    {
-      type: commentSchema,
-    },
-  ],
-});
+  avgRating: { type: Number, default: 0 },
+  ratings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rating' }],
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
+},
+  { timestamps: true });
 
-const validateProduct = {
-  product: Joi.object().keys({
-    _id: Joi.objectId(),
-    name: Joi.string().min(2).max(80).required(),
-    seller: Joi.object().required(),
-    categoryId: Joi.object().required(),
-    price: Joi.number().min(0).required(),
-    stock: Joi.number().min(0).required(),
-    brand: Joi.string().min(2).max(80).required(),
-    images: Joi.array().required(),
-    ratings: Joi.array(),
-    comments: Joi.array(),
-    description: Joi.string().min(10).max(255),
-  }),
-};
-const Product = new mongoose.model('product', productSchema);
+export const validateProduct = (product) => {
+  const validateProduct = {
+    product: Joi.object().keys({
+      _id: Joi.objectId(),
+      name: Joi.string().min(2).max(80).required(),
+      seller: Joi.object().required(),
+      categoryId: Joi.object().required(),
+      price: Joi.number().min(0).required(),
+      stock: Joi.number().min(0).required(),
+      brand: Joi.string().min(2).max(80).required(),
+      images: Joi.array().required(),
+      ratings: Joi.array(),
+      comments: Joi.array(),
+      description: Joi.string().min(10).max(255),
+    }),
+  };
 
-exports.Product = Product;
-exports.validateProduct = validateProduct;
+  return Joi.validate(product, validateProduct)
+}
+
+//TODO: compute a function to add avgRating
+
+const Product = mongoose.model('product', productSchema);
+
+export default Product;
