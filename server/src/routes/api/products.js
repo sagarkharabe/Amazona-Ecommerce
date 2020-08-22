@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import requireJwtAuth from '../../middleware/requireJwtAuth';
-import User from '../../models/User';
 import Product, { validateProduct } from '../../models/Product';
 
 const router = Router();
@@ -12,7 +11,7 @@ router.get('/', async (req, res) => {
         return res.status(200).json({ data: products })
     }
     catch (error) {
-        res.status(500).json({ message: 'Something went wrong.' })
+        return res.status(500).json({ message: 'Something went wrong.' })
     }
 })
 
@@ -32,7 +31,7 @@ router.get('/seller', async (req, res) => {
 // get by Id
 router.get('/:id', async (req, res) => {
     try {
-        //TODO: populate ratings and comments
+        //TODO: populate comments
         const product = await Product.findById(req.params.id).populate('seller');
         if (!product) return res.status(404).json({ message: 'Product doesn\'t exist' });
         return res.status(200).json({ data: product })
@@ -56,16 +55,14 @@ router.post('/', requireJwtAuth, async (req, res) => {
         let product = await Product.create({
             ...value,
             seller: me.id,
-            ratings: [],
             comments: []
         })
-        //TODO: populate ratings and comments
+        //TODO: populate comments
         product = await product.populate('seller').execPopulate()
 
         return res.status(200).json({ data: product })
 
     } catch (error) {
-        console.log(error)
         return res.status(500).json({ message: 'Something went wrong' })
     }
 
