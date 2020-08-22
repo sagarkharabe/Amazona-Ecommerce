@@ -14,9 +14,10 @@ router.put('/register-seller', requireJwtAuth, async (req, res) => {
     try {
         const user = await User.findByIdAndUpdate(
             me.id,
-            { isSeller: true }
+            { isSeller: true },
+            { new: true }
         )
-        res.status(200).json(user)
+        res.status(200).json({ data: user })
     } catch (err) {
         res.status(500).json({ message: 'Something went wrong.' })
     }

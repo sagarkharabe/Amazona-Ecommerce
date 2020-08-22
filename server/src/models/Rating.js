@@ -6,24 +6,14 @@ const { userSchema } = require('./User');
 const { Schema } = mongoose;
 
 const ratingSchema = new Schema({
-  product: {
-    type: productSchema,
-    required: true,
-  },
-  user: {
-    type: userSchema,
-    required: true,
-  },
+  product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   rate: {
     type: Number,
     min: 1,
     max: 5,
     required: true,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
+  }
 },
   { timestamps: true });
 

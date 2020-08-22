@@ -11,7 +11,7 @@ const productSchema = new Schema({
     required: true,
   },
   category: {
-    type: [String],
+    type: String,
     required: true,
   },
   seller: {
@@ -20,11 +20,6 @@ const productSchema = new Schema({
     required: true
   },
   price: {
-    type: Number,
-    min: 0,
-    required: true,
-  },
-  stock: {
     type: Number,
     min: 0,
     required: true,
@@ -40,18 +35,7 @@ const productSchema = new Schema({
     minlength: 10,
     maxlength: 255,
   },
-  images: [
-    {
-      contentType: String,
-      default: 'https://www.freeiconspng.com/uploads/no-image-icon-4.png',
-      required: true,
-      data: Buffer,
-    },
-  ],
-  date: {
-    type: Date,
-    default: Date.now,
-  },
+  image: String,
   avgRating: { type: Number, default: 0 },
   ratings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rating' }],
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
@@ -60,19 +44,13 @@ const productSchema = new Schema({
 
 export const validateProduct = (product) => {
   const validateProduct = {
-    product: Joi.object().keys({
-      _id: Joi.objectId(),
-      name: Joi.string().min(2).max(80).required(),
-      seller: Joi.object().required(),
-      categoryId: Joi.object().required(),
-      price: Joi.number().min(0).required(),
-      stock: Joi.number().min(0).required(),
-      brand: Joi.string().min(2).max(80).required(),
-      images: Joi.array().required(),
-      ratings: Joi.array(),
-      comments: Joi.array(),
-      description: Joi.string().min(10).max(255),
-    }),
+    name: Joi.string().min(2).max(80).required(),
+    category: Joi.string().required(),
+    price: Joi.number().min(0).required(),
+    brand: Joi.string().min(2).max(80).required(),
+    image: Joi.string().required(),
+    avgRating: Joi.number().default(0),
+    description: Joi.string().max(255).required(),
   };
 
   return Joi.validate(product, validateProduct)
