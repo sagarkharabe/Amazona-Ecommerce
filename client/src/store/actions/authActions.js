@@ -38,10 +38,8 @@ export const loadMe = () => async (dispatch, getState) => {
 
 export const loginUserWithUsername = (formData, history) => async (dispatch, getState) => {
   dispatch({ type: LOGIN_WITH_USERNAME_LOADING });
-  console.log(formData)
   try {
     const response = await axios.post('/auth/login', formData);
-
     dispatch({
       type: LOGIN_WITH_USERNAME_SUCCESS,
       payload: { token: response.data.token, me: response.data.me },

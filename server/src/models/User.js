@@ -68,6 +68,7 @@ userSchema.methods.toJSON = function () {
     avatar: avatar,
     name: this.name,
     role: this.role,
+    isSeller: this.isSeller,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
   };
@@ -83,6 +84,7 @@ userSchema.methods.generateJWT = function () {
       id: this._id,
       provider: this.provider,
       email: this.email,
+      isSeller: this.isSeller
     },
     secretOrKey,
   );
