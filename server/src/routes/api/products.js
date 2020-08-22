@@ -30,7 +30,7 @@ router.get('/seller', async (req, res) => {
 })
 
 // get by Id
-router.get('/:id', requireJwtAuth, async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         //TODO: populate ratings and comments
         const product = await Product.findById(req.params.id).populate('seller');
