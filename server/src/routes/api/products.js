@@ -90,8 +90,23 @@ router.put('/:id', requireJwtAuth, async (req, res) => {
 
         return res.status(200).json({ data: product })
     } catch (error) {
-        console.log(error)
         res.status(500).json({ message: 'Something went wrong' })
+    }
+})
+
+// delete one
+router.delete('/:id', requireJwtAuth, async (req, res) => {
+    try {
+        const temp = await Product.findById(req.params.id).populate('seller');
+        if (!temp || !req.user.isSeller || req.user.id !== temp.seller.id)
+            return res.status(400).json({ message: "You don't have access." })
+
+        const product = await Product.findByIdAndRemove(req.params.id).populated('seller');
+        if (!product) return res.status(404).json({ message: 'No product found.' });
+
+        res.status(200).json({ data: product })
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong' })
     }
 })
 
