@@ -6,7 +6,7 @@ import Product, { validateProduct } from '../../models/Product';
 const router = Router();
 
 // get all products
-router.get('/', requireJwtAuth, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const products = await Product.find();
         return res.status(200).json({ data: products })
@@ -17,7 +17,7 @@ router.get('/', requireJwtAuth, async (req, res) => {
 })
 
 // get all products for a seller
-router.get('/seller', requireJwtAuth, async (req, res) => {
+router.get('/seller', async (req, res) => {
     if (!req.user.isSeller) return res.status(400).json({ message: 'Register for seller.' })
     try {
         const products = await Product.find({ seller: req.user.id });
