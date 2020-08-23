@@ -17,7 +17,7 @@ const AppLayout = ({ children }) => {
         style={{
           margin: '24px 16px',
           padding: 24,
-          minHeight: 'calc(100vh - 160px)',
+          minHeight: 'calc(100vh - 162px)',
           background: '#fff',
         }}
       >
