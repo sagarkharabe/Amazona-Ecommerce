@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getProduct } from '../../store/actions//productActions';
 import { withRouter } from 'react-router-dom';
+import { addToCart } from '../../store/actions/cartActions';
 
 const { Text } = Typography;
 
-const Product = ({ item, history, auth }) => {
+const Product = ({ item, history, auth, addToCart }) => {
   const onAddToCart = () => {
     auth.isAuthenticated ? console.log('add to cart') : history.push('/login');
     // cart action
+    addToCart(item);
   };
   return (
     <Card
@@ -60,7 +62,14 @@ const Product = ({ item, history, auth }) => {
         </Space>
         <Rate allowHalf value={item.rating || 3.5} />
         <br />
-        <Button style={{ position: 'absolute', bottom: 10 }} type="primary" onClick={onAddToCart}>
+        <Button
+          style={{ position: 'absolute', bottom: 10 }}
+          type="primary"
+          onClick={(e) => {
+            e.stopPropagation();
+            onAddToCart();
+          }}
+        >
           Add to Cart
         </Button>
       </div>
@@ -72,4 +81,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default compose(withRouter, connect(mapStateToProps, { getProduct }))(Product);
+export default compose(withRouter, connect(mapStateToProps, { getProduct, addToCart }))(Product);

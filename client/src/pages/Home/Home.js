@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import Cart from '../../components/Cart/Cart';
 import { getProducts } from '../../store/actions/productsActions';
 import ProductCard from '../../components/Product/Product';
 
@@ -8,7 +9,7 @@ import Layout from '../../layout/Layout';
 
 import './styles.css';
 
-const Home = ({ auth, products: { products }, getProducts }) => {
+const Home = ({ auth, products: { products }, getProducts, cartItems }) => {
   useEffect(() => {
     getProducts();
   }, []);
@@ -27,12 +28,14 @@ const Home = ({ auth, products: { products }, getProducts }) => {
           </div>
         </div>
       </div>
+      {cartItems.length ? <Cart /> : null}
     </Layout>
   );
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  cartItems: state.cart.cartItems,
   products: state.products,
 });
 

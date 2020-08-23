@@ -5,6 +5,7 @@ import registerReducer from './registerReducer';
 import userReducer from './userReducer';
 import usersReducer from './usersReducer';
 import messageReducer from './messageReducer';
+import cartReducer from './cartReducer';
 import productReducer from './productReducer';
 import productsReducer from './productsReducer';
 
@@ -14,6 +15,7 @@ export default combineReducers({
   message: messageReducer,
   user: userReducer,
   users: usersReducer,
+  cart: cartReducer,
   product: productReducer,
   products: productsReducer,
 });

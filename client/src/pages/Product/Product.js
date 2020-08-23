@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Carousel, Rate, Comment, Avatar, Form, Button, List, Input } from 'antd';
+import { Carousel, Rate, Comment, Avatar, Form, Button, Input } from 'antd';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getProduct } from '../../store/actions//productActions';
 import { withRouter } from 'react-router-dom';
 import Layout from '../../layout/Layout';
+import { addToCart } from '../../store/actions/cartActions';
 import './styles.css';
 const { TextArea } = Input;
 
-const Editor = ({ onChange, onSubmit, submitting, value }) => (
+const Editor = ({ onChange, onSubmit, submitting, value, addToCart }) => (
   <>
     <Form.Item>
       <TextArea rows={4} onChange={onChange} value={value} />
@@ -36,6 +37,8 @@ const Product = ({ auth, getProduct, history, match, product }) => {
   const onSubmitComment = () => {
     auth.isAuthenticated ? console.log('call comment posting api here') : history.push('/login');
   };
+
+  const onAddToCart = () => addToCart(product);
   return (
     <Layout>
       <div
@@ -71,11 +74,19 @@ const Product = ({ auth, getProduct, history, match, product }) => {
           <h3>Category: {product.category}</h3>
           <h3>Brand: {product.brand}</h3>
           {product.avgRating ? (
-            <Rate allowHalf value={product.avgRating} onChange={onChangeRating} />
+            <>
+              <span>Rated by Users</span>
+              <Rate allowHalf value={product.avgRating} onChange={onChangeRating} />
+            </>
           ) : null}
+          {/* {auth.isAuthenticated ? (
+            <Button type="primary" onClick={onAddToCart}>
+              Add to Cart
+            </Button>
+          ) : null} */}
           {(product.comments || []).map((x) => (
             <Comment
-              author={<a>{x.user}</a>}
+              author={<a>{x.user.name}</a>}
               avatar={
                 <Avatar
                   src="https://www.iconfinder.com/icons/172626/male_user_icon"
@@ -109,4 +120,4 @@ const mapStateToProps = (state) => ({
   product: state.product.product,
 });
 
-export default compose(withRouter, connect(mapStateToProps, { getProduct }))(Product);
+export default compose(withRouter, connect(mapStateToProps, { getProduct, addToCart }))(Product);
