@@ -14,7 +14,7 @@ const CartItem = ({ id, removeFromCart, cartItems }) => {
         paddingBottom: 10,
         borderBottomWidth: '2px',
         borderBottomStyle: 'solid',
-        borderBottomColor: '#000',
+        borderBottomColor: '#e5e5e5',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'row',

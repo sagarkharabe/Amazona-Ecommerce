@@ -10,9 +10,7 @@ const { Text } = Typography;
 
 const Product = ({ item, history, auth, addToCart }) => {
   const onAddToCart = () => {
-    auth.isAuthenticated ? console.log('add to cart') : history.push('/login');
-    // cart action
-    addToCart(item);
+    auth.isAuthenticated ? addToCart(item) : history.push('/login');
   };
   return (
     <Card
@@ -27,7 +25,12 @@ const Product = ({ item, history, auth, addToCart }) => {
         borderRadius: 5,
         margin: 20,
       }}
-      title={<Typography.Title level={4}>{item.name.length > 24 ? (item.name + " ").substr(0, 22).concat('...') : item.name}</Typography.Title>}
+      title={
+        <Typography.Title level={4}>
+          {item.name.length > 24 ? (item.name + ' ').substr(0, 22).concat('...') : item.name}
+        </Typography.Title>
+      }
+      headStyle={{ textOverflow: 'ellipsis' }}
       onClick={() => history.push(`/product/${item._id}`)}
     >
       <div
@@ -54,7 +57,7 @@ const Product = ({ item, history, auth, addToCart }) => {
           display: 'flex',
           alignItems: 'left',
           paddingTop: 12,
-          paddingBottom: 12
+          paddingBottom: 12,
         }}
       >
         <Space direction="vertical">
@@ -63,11 +66,18 @@ const Product = ({ item, history, auth, addToCart }) => {
           <Text style={{ fontWeight: 300 }}>{item.category}</Text>
         </Space>
         <div>
-          <Typography.Text>{item.avgRating?.toFixed(1)}{' '}</Typography.Text>
+          <Typography.Text>{item.avgRating?.toFixed(1)} </Typography.Text>
           <Rate disabled={!auth.isAuthenticated} allowHalf value={item.avgRating} />
         </div>
         <br />
-        <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div
+          style={{
+            display: 'flex',
+            width: '100%',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           <Button
             type="primary"
             onClick={(e) => {
@@ -76,20 +86,20 @@ const Product = ({ item, history, auth, addToCart }) => {
             }}
           >
             Add to Cart
-        </Button>
+          </Button>
           <Button
             style={{ fontSize: 12 }}
             type="link"
             onClick={(e) => {
               e.stopPropagation();
-              history.push(`/seller/${item.seller}`)
+              history.push(`/seller/${item.seller}`);
             }}
           >
             More from seller
           </Button>
         </div>
       </div>
-    </Card >
+    </Card>
   );
 };
 

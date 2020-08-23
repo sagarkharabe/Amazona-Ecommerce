@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, Typography } from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -9,24 +9,23 @@ const Cart = ({ auth, cartItems, history }) => {
   const onHandleCheckout = () => {
     auth.isAuthenticated ? console.log('allow checkout') : history.push('/login');
   };
-  console.log(cartItems);
   return (
     <div
       style={{
-        height: '90%',
-        width: '20%',
+        height: '83%',
+        width: '300px',
         position: 'fixed',
-        right: 0,
+        right: 16,
         top: 90,
-        borderWidth: '5px',
-        borderColor: 'black',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
       }}
     >
-      Cart
+      <Typography.Title level={2} style={{ marginTop: 20 }}>
+        Cart
+      </Typography.Title>
       {cartItems.map((item) => (
         <CartItem id={item._id} />
       ))}
