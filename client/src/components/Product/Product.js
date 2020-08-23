@@ -3,7 +3,7 @@ import { Card, Button, Rate, Typography, Space } from 'antd';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getProduct } from '../../store/actions//productActions';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { addToCart } from '../../store/actions/cartActions';
 
 const { Text } = Typography;
@@ -64,7 +64,7 @@ const Product = ({ item, history, auth, addToCart }) => {
         </Space>
         <div>
           <Typography.Text>{item.avgRating?.toFixed(1)}{' '}</Typography.Text>
-          <Rate allowHalf value={item.avgRating} />
+          <Rate disabled={!auth.isAuthenticated} allowHalf value={item.avgRating} />
         </div>
         <br />
         <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>

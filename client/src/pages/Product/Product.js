@@ -80,7 +80,7 @@ const Product = ({ auth, getProduct, history, match, product }) => {
             <Typography.Text strong style={{ fontSize: 14 }}>Brand: {product.brand}</Typography.Text> <br />
             <Typography.Text strong style={{ fontSize: 14 }}>Category: {product.category}</Typography.Text> <br />
             <Typography.Text style={{ fontSize: 16 }}>{product.avgRating?.toFixed(1)}{' '}</Typography.Text>
-            <Rate allowHalf value={product.avgRating} onChange={onChangeRating} />
+            <Rate disabled={!auth.isAuthenticated} allowHalf value={product.avgRating} onChange={onChangeRating} />
             <Typography.Text style={{ fontSize: 16 }}>{` (${product.numRatings})`}</Typography.Text>
 
           </div>
