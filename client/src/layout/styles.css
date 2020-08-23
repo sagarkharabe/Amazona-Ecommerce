@@ -4,3 +4,8 @@
   /* border: 1px solid green; */
   min-height: calc(100% - 131px);
 }
+
+.ant-layout-header {
+  padding: 0 !important;
+  background: none
+}
