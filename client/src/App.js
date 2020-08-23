@@ -11,6 +11,7 @@ import Seller from './pages/Seller/Seller';
 import NotFound from './pages/NotFound/NotFound';
 import Product from './pages/Product/Product';
 import Cart from './pages/Cart/Cart';
+import CreateProduct from './pages/CreateProduct/CreateProduct';
 import RegisterSeller from './pages/RegisterSeller/RegisterSeller';
 
 import Loader from './components/Loader/Loader';
@@ -46,6 +47,7 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/notfound" component={NotFound} />
+          <Route path="/new" component={CreateProduct} />
           <Route path="/register-seller" component={RegisterSeller} />
           <Route path="/seller/:id" component={Seller} />
           <Route path="/product/:id" component={Product} />
