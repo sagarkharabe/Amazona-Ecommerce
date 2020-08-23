@@ -1,22 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Layout } from 'antd';
 
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer/Footer';
 import './styles.css';
+const { Header, Content } = Layout;
 
-const Layout = ({ children }) => {
+const AppLayout = ({ children }) => {
   return (
-    <>
-      <Navbar />
-      <div className="container">{children}</div>
+    <Layout >
+      <Header>
+        <Navbar />
+      </Header>
+      <Content
+        style={{
+          margin: '24px 16px',
+          padding: 24,
+          minHeight: 'calc(100vh - 160px)',
+          background: '#fff',
+        }}
+      >
+        {children}
+      </Content>
       <Footer />
-    </>
+    </Layout>
   );
 };
 
-Layout.propTypes = {
+AppLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default Layout;
+export default AppLayout;
