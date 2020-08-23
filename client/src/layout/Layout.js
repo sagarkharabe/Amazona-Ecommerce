@@ -9,7 +9,7 @@ const { Header, Content } = Layout;
 
 const AppLayout = ({ children }) => {
   return (
-    <Layout >
+    <Layout>
       <Header>
         <Navbar />
       </Header>
