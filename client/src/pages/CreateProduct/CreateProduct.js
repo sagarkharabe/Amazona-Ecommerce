@@ -6,7 +6,6 @@ import { UploadOutlined } from '@ant-design/icons';
 import { categories } from '../../constants/categories';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-// import { uploadImage } from '../../store/actions/imageActions';
 import { createProduct } from '../../store/actions/productActions';
 
 const { Option } = Select;
@@ -31,10 +30,6 @@ const CreateProduct = ({ createProduct }) => {
     console.log('Received values of form: ', values);
     createProduct(values);
   };
-
-  //   const onUploadImage = async ({ file, onSuccess }) => {
-  //     uploadImage(file);
-  //   };
 
   const dummyRequest = ({ file, onSuccess }) => {
     setTimeout(() => {
