@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Carousel, Rate, Comment, Avatar, Form, Button, Input } from 'antd';
+import { Carousel, Rate, Comment, Avatar, Form, Button, Input, Card, Typography } from 'antd';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getProduct } from '../../store/actions//productActions';
@@ -50,56 +50,67 @@ const Product = ({ auth, getProduct, history, match, product }) => {
           alignItems: 'stretch',
         }}
       >
-        <h1 style={{ textAlign: 'center' }}>{product.name || 'Product Page'}</h1>
-        <h2 style={{ textAlign: 'center' }}>{product.description || ''}</h2>
-        <Carousel>
-          <div
-            style={{
-              height: '600px',
-              width: '500px',
-              backgroundColor: '#364d79',
-              overflow: 'hidden',
-            }}
-          >
-            <img
-              alt="example"
-              height="auto"
-              width="auto"
-              style={{ maxWidth: '300px', maxHeight: '100%' }}
-              src={product.image || 'https://www.freeiconspng.com/uploads/no-image-icon-4.png'}
-            />
+
+        <div style={{ display: 'flex', flexDirection: 'row', width: '70%', marginTop: 32, marginBottom: 24, justifyContent: 'space-between' }}>
+          <div style={{ marginRight: 32 }}>
+            <Card style={{ height: '500px', width: '500px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <div
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <img
+                  alt="example"
+                  height="auto"
+                  width="auto"
+                  style={{ maxWidth: '350px', maxHeight: '70%' }}
+                  src={product.image || 'https://www.freeiconspng.com/uploads/no-image-icon-4.png'}
+                />
+              </div>
+            </Card>
           </div>
-        </Carousel>
+          <div>
+            <Typography.Title level={3} style={{}}>{product.name}</Typography.Title>
+            <Typography.Title level={4} style={{}}>{product.description}</Typography.Title>
+            <Typography.Text strong style={{ fontSize: 14 }}>Brand: {product.brand}</Typography.Text> <br />
+            <Typography.Text strong style={{ fontSize: 14 }}>Category: {product.category}</Typography.Text> <br />
+            <Typography.Text style={{ fontSize: 16 }}>{product.avgRating?.toFixed(1)}{' '}</Typography.Text>
+            <Rate allowHalf value={product.avgRating} onChange={onChangeRating} />
+            <Typography.Text style={{ fontSize: 16 }}>{` (${product.numRatings})`}</Typography.Text>
+
+          </div>
+        </div>
         <div>
-          <h3>Category: {product.category}</h3>
-          <h3>Brand: {product.brand}</h3>
-          {product.avgRating ? (
-            <>
-              <span>Rated by Users</span>
-              <Rate allowHalf value={product.avgRating} onChange={onChangeRating} />
-            </>
-          ) : null}
           {/* {auth.isAuthenticated ? (
             <Button type="primary" onClick={onAddToCart}>
               Add to Cart
             </Button>
+
+            
           ) : null} */}
+          <Typography.Title level={3}>Comments</Typography.Title>
           {(product.comments || []).map((x) => (
             <Comment
-              author={<a>{x.user.name}</a>}
+              author={<Typography.Text strong>{x.user.name}</Typography.Text>}
               avatar={
                 <Avatar
-                  src="https://www.iconfinder.com/icons/172626/male_user_icon"
+                  src={x.user.avatar}
                   alt="Han Solo"
                 />
               }
-              content={<p>{x.comment}</p>}
+              content={<Typography.Text>{x.comment}</Typography.Text>}
             />
           ))}
+
           <Comment
-            author={auth.isAuthenticated ? auth.me.username : ''}
+            author={<Typography.Text strong>{auth.me?.username}</Typography.Text>}
             avatar={
-              <Avatar src="https://www.iconfinder.com/icons/172626/male_user_icon" alt="Han Solo" />
+              <Avatar src={auth.me?.avatar} alt="Han Solo" />
             }
             content={
               <Editor
@@ -111,7 +122,7 @@ const Product = ({ auth, getProduct, history, match, product }) => {
           />
         </div>
       </div>
-    </Layout>
+    </Layout >
   );
 };
 

@@ -3,7 +3,7 @@ import { Card, Button, Rate, Typography, Space } from 'antd';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getProduct } from '../../store/actions//productActions';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { addToCart } from '../../store/actions/cartActions';
 
 const { Text } = Typography;
@@ -18,8 +18,8 @@ const Product = ({ item, history, auth, addToCart }) => {
     <Card
       hoverable
       style={{
-        width: 250,
-        height: 550,
+        width: 280,
+        height: 560,
         flexDirection: 'column',
         justifyContent: 'center',
         display: 'flex',
@@ -27,7 +27,7 @@ const Product = ({ item, history, auth, addToCart }) => {
         borderRadius: 5,
         margin: 20,
       }}
-      title={item.name}
+      title={item.name.length > 24 ? (item.name + " ").substr(0, 22).concat('...') : item.name}
       onClick={() => history.push(`/product/${item._id}`)}
     >
       <div
@@ -52,28 +52,44 @@ const Product = ({ item, history, auth, addToCart }) => {
           flexDirection: 'column',
           justifyContent: 'center',
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'left',
+          paddingTop: 12,
+          paddingBottom: 12
         }}
       >
         <Space direction="vertical">
-          <Text>Rs.{item.price}</Text>
-          <Text>{item.brand}</Text>
-          <Text>{item.category}</Text>
+          <Text strong>Rs.{item.price}</Text>
+          <Text>Brand: {item.brand}</Text>
+          <Text style={{ fontWeight: 300 }}>{item.category}</Text>
         </Space>
-        <Rate allowHalf value={item.avgRating} />
+        <div>
+          <Typography.Text>{item.avgRating?.toFixed(1)}{' '}</Typography.Text>
+          <Rate allowHalf value={item.avgRating} />
+        </div>
         <br />
-        <Button
-          style={{ position: 'absolute', bottom: 10 }}
-          type="primary"
-          onClick={(e) => {
-            e.stopPropagation();
-            onAddToCart();
-          }}
-        >
-          Add to Cart
+        <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Button
+            type="primary"
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToCart();
+            }}
+          >
+            Add to Cart
         </Button>
+          <Button
+            style={{ fontSize: 12 }}
+            type="link"
+            onClick={(e) => {
+              e.stopPropagation();
+              history.push(`/seller/${item.seller}`)
+            }}
+          >
+            More from seller
+          </Button>
+        </div>
       </div>
-    </Card>
+    </Card >
   );
 };
 

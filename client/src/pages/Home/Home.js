@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Typography, } from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import Cart from '../../components/Cart/Cart';
@@ -17,11 +18,12 @@ const Home = ({ auth, products: { products }, getProducts, cartItems }) => {
   return (
     <Layout>
       <div className="home-page">
-        <h1>Amazona E-Commerce</h1>
-        <h2>Buy from sellers across the globe!</h2>
+        <Typography.Title level={2}>Amazona E-Commerce</Typography.Title>
+        <Typography.Title level={4}>Buy and Sell globally.</Typography.Title>
         <div>
-          <p>Welcome {auth.isAuthenticated ? `${auth.me.name}` : 'guest'}! </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap ' }}>
+          <Typography.Text strong >Welcome {auth.isAuthenticated ? `${auth.me.name}` : 'guest'}! </Typography.Text>
+          <p></p>
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {products.map((product) => (
               <ProductCard item={product} />
             ))}

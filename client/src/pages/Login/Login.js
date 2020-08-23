@@ -29,7 +29,7 @@ const Login = ({ auth, history, loginUserWithUsername }) => {
   return (
     <div className="login">
       <div className="container">
-        <h1>Log in page</h1>
+        <h1>Log In</h1>
         <p>
           back to{' '}
           <Link className="bold" to="/">
