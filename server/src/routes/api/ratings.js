@@ -31,7 +31,7 @@ router.post('/:productId', requireJwtAuth, async (req, res) => {
             product: product.id,
             user: req.user.id
         })
-        product.avgRating = product.avgRating ? (product.avgRating + rating.rate) / 2 : rating.rate;
+        product.avgRating = (product.avgRating ? (product.avgRating + rating.rate) / 2 : rating.rate).toFixed(1);
 
         await product.save();
 
@@ -56,7 +56,7 @@ router.put('/:productId', requireJwtAuth, async (req, res) => {
         const product = await Product.findById(req.params.productId);
         const allProductRatings = await Rating.find({ product: req.params.productId })
         const avgRating = allProductRatings.reduce((acc, p) => ((acc + p.rate) / 2), allProductRatings[0].rate)
-        product.avgRating = avgRating;
+        product.avgRating = avgRating.toFixed(1);
         await product.save()
 
         res.status(200).json({ data: { product, rating } })
