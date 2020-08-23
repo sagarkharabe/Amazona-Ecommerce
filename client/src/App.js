@@ -45,15 +45,15 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/notfound" component={NotFound} />
-          <Route path="/seller" component={Seller} />
+          <Route path="/seller/:id" component={Seller} />
           <Route path="/product/:id" component={Product} />
           <Route path="/cart" component={Cart} />
           <Route exact path="/" component={Home} />
           <Route component={NotFound} />
         </Switch>
       ) : (
-        <Loader />
-      )}
+          <Loader />
+        )}
     </>
   );
 };

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import requireJwtAuth from '../../middleware/requireJwtAuth';
 import Product, { validateProduct } from '../../models/Product';
 import Rating from '../../models/Rating';
+import User from '../../models/User';
 
 const router = Router();
 
@@ -17,11 +18,11 @@ router.get('/', async (req, res) => {
 })
 
 // get all products for a seller
-router.get('/seller', async (req, res) => {
-    if (!req.user.isSeller) return res.status(400).json({ message: 'Register for seller.' })
+router.get('/seller/:id', async (req, res) => {
     try {
-        const products = await Product.find({ seller: req.user.id });
-        return res.status(200).json({ data: products })
+        const seller = await User.findById(req.params.id)
+        const products = await Product.find({ seller: req.params.id });
+        return res.status(200).json({ data: { seller, products } })
     }
     catch (error) {
         console.log(error)
