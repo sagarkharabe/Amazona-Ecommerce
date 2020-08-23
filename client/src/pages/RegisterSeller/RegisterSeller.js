@@ -7,15 +7,14 @@ import { registerSeller } from '../../store/actions/sellerActions';
 import { withRouter, Redirect } from 'react-router-dom';
 import { Button, Typography } from 'antd';
 
-const RegisterSeller = ({ auth, history }) => {
+const RegisterSeller = ({ auth, history, registerSeller }) => {
   const [storeName, setstoreName] = useState('');
 
   const handleSubmit = () => {
     registerSeller({ storeName }, history);
-  }
-
+  };
   if (!auth.isAuthenticated) return <Redirect to="/" />;
-  else if (auth.me.isSeller) return <Redirect to="/seller-dashboard" />;
+  else if (auth.me.isSeller) return <Redirect to={`/seller/${auth.me.id}`} />;
   return (
     <Layout>
       <div
@@ -27,7 +26,9 @@ const RegisterSeller = ({ auth, history }) => {
         }}
       >
         <Typography.Title level={2}>Seller Registration</Typography.Title>
-        <Typography.Text>To create a seller account, please enter your business name </Typography.Text>
+        <Typography.Text>
+          To create a seller account, please enter your business name{' '}
+        </Typography.Text>
         <Typography.Text strong>Name: {auth.me.name}</Typography.Text>
         <Typography.Text strong>Username: {auth.me.username}</Typography.Text>
 
@@ -39,9 +40,14 @@ const RegisterSeller = ({ auth, history }) => {
           onChange={(e) => setstoreName(e.target.value)}
         />
         <div>
-          <Button type={'primary'} type={"submit"} disabled={storeName === ''} onClick={handleSubmit}>
+          <Button
+            type={'primary'}
+            type={'submit'}
+            disabled={storeName === ''}
+            onClick={handleSubmit}
+          >
             Register
-            </Button>
+          </Button>
         </div>
       </div>
     </Layout>
@@ -52,4 +58,7 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(withRouter, compose(mapStateToProps))(requireAuth(RegisterSeller));
+export default compose(
+  withRouter,
+  connect(mapStateToProps, { registerSeller }),
+)(requireAuth(RegisterSeller));

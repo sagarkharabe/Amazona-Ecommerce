@@ -23,7 +23,7 @@ const Navbar = ({ auth, logOutUser, history }) => {
           <>
             {auth.me?.isSeller ? (
               <li className="nav-item">
-                <Link to="/seller-dashboard">Dashboard</Link>
+                <Link to={`/seller/:${auth.me.id}`}>Dashboard</Link>
               </li>
             ) : (
               <li className="nav-item">

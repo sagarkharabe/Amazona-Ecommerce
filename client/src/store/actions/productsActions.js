@@ -9,7 +9,6 @@ export const getProducts = () => async (dispatch, getState) => {
   try {
     const options = attachTokenToHeaders(getState);
     const response = await axios.get('/api/products', options);
-    console.log(response);
     dispatch({
       type: GET_PRODUCTS_SUCCESS,
       payload: { products: response.data.data },
