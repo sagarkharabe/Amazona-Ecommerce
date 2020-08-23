@@ -38,6 +38,7 @@ const userSchema = new Schema({
   name: String,
   avatar: String,
   isSeller: { type: Boolean, default: false },
+  storeName: String,
   // google
   googleId: {
     type: String,
@@ -68,6 +69,7 @@ userSchema.methods.toJSON = function () {
     avatar: avatar,
     name: this.name,
     isSeller: this.isSeller,
+    storeName: this.storeName,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
   };
@@ -139,6 +141,13 @@ export const validateUser = (user) => {
 
   return Joi.validate(user, schema);
 };
+
+export const validateSeller = (seller) => {
+  const schema = {
+    storeName: Joi.string().min(2).max(30).required()
+  }
+  return Joi.validate(seller, schema)
+}
 
 const User = mongoose.model('User', userSchema);
 

@@ -34,11 +34,11 @@ router.get('/:id', async (req, res) => {
     try {
         const product = await Product.findById(req.params.id)
             .populate('seller')
-            .populate({ path: 'comments', populate: { path: 'user' } });
+            .populate({ path: 'comments', populate: { path: 'user' }, options: { sort: [[['createdAt', 'desc']]] } })
 
         if (!product) return res.status(404).json({ message: 'Product doesn\'t exist' });
 
-        const numRatings = await Rating.count({ product: req.params.id });
+        const numRatings = await Rating.countDocuments({ product: req.params.id });
 
         return res.status(200).json({ data: { ...product._doc, numRatings } })
     }
