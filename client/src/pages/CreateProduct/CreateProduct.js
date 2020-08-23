@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import Layout from '../../layout/Layout';
 import { Form, Select, InputNumber, Button, Upload, Input } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';

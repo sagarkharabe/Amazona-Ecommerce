@@ -5,15 +5,17 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { registerSeller } from '../../store/actions/sellerActions';
 import { withRouter, Redirect } from 'react-router-dom';
-import { Button } from 'antd';
+import { Button, Typography } from 'antd';
 
 const RegisterSeller = ({ auth, history }) => {
-  const [businessName, setBusinessName] = useState('');
+  const [storeName, setstoreName] = useState('');
 
-  const handleSubmit = () => registerSeller({ ...auth.me, businessName }, history);
+  const handleSubmit = () => {
+    registerSeller({ storeName }, history);
+  }
 
   if (!auth.isAuthenticated) return <Redirect to="/" />;
-  if (auth.me?.isSeller) return <Redirect to="/seller-dashboard" />;
+  else if (auth.me.isSeller) return <Redirect to="/seller-dashboard" />;
   return (
     <Layout>
       <div
@@ -24,23 +26,23 @@ const RegisterSeller = ({ auth, history }) => {
           alignItems: 'center',
         }}
       >
-        <h1>Seller Registration</h1>
-        <p>To create a seller account, please enter your business name </p>
-        <p>Username: {auth.me.username}</p>
-        <form onSubmit={handleSubmit}>
-          <input
-            style={{ width: '400px', marginVertical: '10px' }}
-            value={businessName}
-            type="text"
-            placeholder="Business Name"
-            onChange={(e) => setBusinessName(e.target.value)}
-          />
-          <div>
-            <Button primary type="submit" disabled={businessName === ''}>
-              Register
+        <Typography.Title level={2}>Seller Registration</Typography.Title>
+        <Typography.Text>To create a seller account, please enter your business name </Typography.Text>
+        <Typography.Text strong>Name: {auth.me.name}</Typography.Text>
+        <Typography.Text strong>Username: {auth.me.username}</Typography.Text>
+
+        <input
+          style={{ width: '400px', marginTop: '10px', marginBottom: '10px' }}
+          value={storeName}
+          type="text"
+          placeholder="Store Name"
+          onChange={(e) => setstoreName(e.target.value)}
+        />
+        <div>
+          <Button type={'primary'} type={"submit"} disabled={storeName === ''} onClick={handleSubmit}>
+            Register
             </Button>
-          </div>
-        </form>
+        </div>
       </div>
     </Layout>
   );

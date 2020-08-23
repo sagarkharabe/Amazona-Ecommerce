@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import { attachTokenToHeaders } from './authActions';
 import { GET_PRODUCTS_FAIL, GET_PRODUCTS_SUCCESS, GET_PRODUCTS_LOADING, GET_SELLER_PRODUCTS_SUCCESS, GET_SELLER_PRODUCTS_FAIL, GET_SELLER_PRODUCTS_LOADING } from '../types';
 
