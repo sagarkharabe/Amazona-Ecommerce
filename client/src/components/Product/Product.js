@@ -18,8 +18,8 @@ const Product = ({ item, history, auth, addToCart }) => {
     <Card
       hoverable
       style={{
-        width: 280,
-        height: 560,
+        width: '300px',
+        height: '580px',
         flexDirection: 'column',
         justifyContent: 'center',
         display: 'flex',
@@ -27,13 +27,13 @@ const Product = ({ item, history, auth, addToCart }) => {
         borderRadius: 5,
         margin: 20,
       }}
-      title={item.name.length > 24 ? (item.name + " ").substr(0, 22).concat('...') : item.name}
+      title={<Typography.Title level={4}>{item.name.length > 24 ? (item.name + " ").substr(0, 22).concat('...') : item.name}</Typography.Title>}
       onClick={() => history.push(`/product/${item._id}`)}
     >
       <div
         style={{
-          height: '300px',
           width: '100%',
+          height: '280px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -43,7 +43,7 @@ const Product = ({ item, history, auth, addToCart }) => {
           alt="example"
           width="auto"
           height="auto"
-          style={{ maxWidth: '100%', maxHeight: '100%' }}
+          style={{ maxWidth: '100%', maxHeight: '280px' }}
           src={item.image || 'https://www.freeiconspng.com/uploads/no-image-icon-4.png'}
         />
       </div>

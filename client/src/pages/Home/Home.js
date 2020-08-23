@@ -19,7 +19,7 @@ const Home = ({ auth, products: { products }, getProducts, cartItems }) => {
     <Layout>
       <div className="home-page">
         <Typography.Title level={2}>Amazona E-Commerce</Typography.Title>
-        <Typography.Title level={4}>Buy and Sell globally.</Typography.Title>
+        <Typography.Title level={4} >Buy and Sell globally.</Typography.Title>
         <div>
           <Typography.Text strong >Welcome {auth.isAuthenticated ? `${auth.me.name}` : 'guest'}! </Typography.Text>
           <p></p>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Carousel, Rate, Comment, Avatar, Form, Button, Input, Card, Typography } from 'antd';
+import { Rate, Comment, Avatar, Form, Button, Input, Card, Typography } from 'antd';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getProduct } from '../../store/actions//productActions';
@@ -68,7 +68,7 @@ const Product = ({ auth, getProduct, history, match, product }) => {
                   alt="example"
                   height="auto"
                   width="auto"
-                  style={{ maxWidth: '350px', maxHeight: '70%' }}
+                  style={{ maxWidth: '450px', maxHeight: '450px' }}
                   src={product.image || 'https://www.freeiconspng.com/uploads/no-image-icon-4.png'}
                 />
               </div>
