@@ -1,6 +1,4 @@
 import axios from 'axios';
-
-import { getMessages } from './messageActions';
 import {
   LOGIN_WITH_OAUTH_LOADING,
   LOGIN_WITH_OAUTH_SUCCESS,
@@ -12,9 +10,6 @@ import {
   ME_LOADING,
   ME_SUCCESS,
   ME_FAIL,
-  RESEED_DATABASE_LOADING,
-  RESEED_DATABASE_SUCCESS,
-  RESEED_DATABASE_FAIL,
 } from '../types';
 
 export const loadMe = () => async (dispatch, getState) => {

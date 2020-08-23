@@ -12,6 +12,7 @@ const RegisterSeller = ({ auth, history }) => {
 
   const handleSubmit = () => registerSeller({ ...auth.me, businessName }, history);
 
+  if (!auth.isAuthenticated) return <Redirect to="/" />;
   if (auth.me?.isSeller) return <Redirect to="/seller-dashboard" />;
   return (
     <Layout>

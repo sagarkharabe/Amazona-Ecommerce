@@ -6,7 +6,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { categories } from '../../constants/categories';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { uploadImage } from '../../store/actions/imageActions';
+// import { uploadImage } from '../../store/actions/imageActions';
 import { createProduct } from '../../store/actions/productActions';
 
 const { Option } = Select;
