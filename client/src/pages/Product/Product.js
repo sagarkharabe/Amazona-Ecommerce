@@ -6,7 +6,7 @@ import { getProduct } from '../../store/actions//productActions';
 import { withRouter } from 'react-router-dom';
 import Layout from '../../layout/Layout';
 import { addToCart } from '../../store/actions/cartActions';
-import './styles.css';
+import moment from 'moment'
 const { TextArea } = Input;
 
 const Editor = ({ onChange, onSubmit, submitting, value, addToCart }) => (
@@ -103,6 +103,7 @@ const Product = ({ auth, getProduct, history, match, product }) => {
                   alt="Han Solo"
                 />
               }
+              datetime={moment(x.createdAt).fromNow()}
               content={<Typography.Text>{x.comment}</Typography.Text>}
             />
           ))}
