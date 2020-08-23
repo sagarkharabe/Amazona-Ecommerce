@@ -8,6 +8,7 @@ import messageReducer from './messageReducer';
 import cartReducer from './cartReducer';
 import productReducer from './productReducer';
 import productsReducer from './productsReducer';
+import sellerReducer from './sellerReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -18,4 +19,5 @@ export default combineReducers({
   cart: cartReducer,
   product: productReducer,
   products: productsReducer,
+  seller: sellerReducer,
 });
