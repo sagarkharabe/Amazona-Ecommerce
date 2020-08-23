@@ -60,7 +60,7 @@ const Product = ({ item, history, auth, addToCart }) => {
           <Text>{item.brand}</Text>
           <Text>{item.category}</Text>
         </Space>
-        <Rate allowHalf value={item.rating || 3.5} />
+        <Rate allowHalf value={item.avgRating} />
         <br />
         <Button
           style={{ position: 'absolute', bottom: 10 }}
