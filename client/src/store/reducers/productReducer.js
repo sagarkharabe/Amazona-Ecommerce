@@ -5,7 +5,12 @@ import {
   CREATE_PRODUCT_ERROR,
   CREATE_PRODUCT_LOADING,
   CREATE_PRODUCT_SUCCESS,
-  ADD_COMMENT_LOADING, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL,
+  ADD_COMMENT_LOADING,
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_FAIL,
+  DELETE_PRODUCT_FAIL,
+  DELETE_PRODUCT_LOADING,
+  DELETE_PRODUCT_SUCCESS,
 } from '../types';
 
 const initialState = {
@@ -14,6 +19,7 @@ const initialState = {
   isAddingComment: false,
   error: null,
   addCommentError: null,
+  isDeleted: false,
 };
 
 export default function (state = initialState, { type, payload }) {
@@ -59,23 +65,42 @@ export default function (state = initialState, { type, payload }) {
     case ADD_COMMENT_LOADING:
       return {
         ...state,
-        isAddingComment: true
-      }
+        isAddingComment: true,
+      };
     case ADD_COMMENT_SUCCESS:
       return {
         ...state,
         isAddingComment: false,
         product: {
           ...state.product,
-          comments: state.product.comments.unshift(payload.comment)
-        }
-      }
+          comments: state.product.comments.unshift(payload.comment),
+        },
+      };
     case ADD_COMMENT_FAIL:
       return {
         ...state,
         isAddingComment: false,
-        addCommentError: payload
-      }
+        addCommentError: payload,
+      };
+    case DELETE_PRODUCT_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+    case DELETE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        isDeleted: true,
+      };
+    case DELETE_PRODUCT_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        product: {},
+        error: payload,
+      };
     default:
       return state;
   }
