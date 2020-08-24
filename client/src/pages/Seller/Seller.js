@@ -8,10 +8,9 @@ import Cart from '../../components/Cart/Cart';
 import { getSellerProducts } from '../../store/actions/productsActions';
 import ProductCard from '../../components/Product/Product';
 
-const Seller = ({ auth, seller, products, getSellerProducts, cartItems, match }) => {
-  console.log(seller);
+const Seller = ({ seller, products, getSellerProducts, cartItems, match }) => {
   useEffect(() => {
-    getSellerProducts(match.params.id || auth.me.id);
+    getSellerProducts(match.params.id);
   }, []);
   return (
     <Layout>

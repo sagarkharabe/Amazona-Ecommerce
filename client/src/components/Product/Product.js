@@ -3,26 +3,15 @@ import { Card, Button, Rate, Typography, Space } from 'antd';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getProduct } from '../../store/actions//productActions';
-import { withRouter, useLocation } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { addToCart } from '../../store/actions/cartActions';
 
 const { Text } = Typography;
 
 const Product = ({ item, history, auth, addToCart }) => {
-  const location = useLocation();
-
   const onAddToCart = () => {
-    if (auth.me.isSeller && location.pathname === '/seller-dashboard') {
-      history.push(`/seller/product/${item._id}`);
-    } else if (auth.isAuthenticated) {
-      addToCart(item);
-    } else {
-      history.push('/login');
-    }
+    auth.isAuthenticated ? addToCart(item) : history.push('/login');
   };
-
-  const buttonText =
-    auth.me.isSeller && location.pathname === '/seller-dashboard' ? 'Edit' : 'Add To Cart';
   return (
     <Card
       hoverable
@@ -96,9 +85,8 @@ const Product = ({ item, history, auth, addToCart }) => {
               onAddToCart();
             }}
           >
-            {buttonText}
+            Add to Cart
           </Button>
-          {!auth.me.isSeller && (
             <Button
               style={{ fontSize: 12 }}
               type="link"
@@ -109,7 +97,6 @@ const Product = ({ item, history, auth, addToCart }) => {
             >
               More from seller
             </Button>
-          )}
         </div>
       </div>
     </Card>
