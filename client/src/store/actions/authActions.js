@@ -26,7 +26,7 @@ export const loadMe = () => async (dispatch, getState) => {
   } catch (err) {
     dispatch({
       type: ME_FAIL,
-      payload: { error: err.response.data.message },
+      payload: { error: err.response?.data?.message || err.message },
     });
   }
 };

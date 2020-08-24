@@ -23,7 +23,7 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
   </>
 );
 
-const Product = ({ auth, getProduct, history, match, product, isAddingComment }) => {
+const Product = ({ auth, getProduct, history, match, product, isAddingComment, addToCart, addComment }) => {
   const [comment, setComment] = useState('');
 
   //comment this out if you wnat to stay on this page
@@ -98,7 +98,11 @@ const Product = ({ auth, getProduct, history, match, product, isAddingComment })
         </div>
         <div>
 
-          {!auth.isAuthenticated && <Typography.Text style={{ color: "#B12705" }}>* You need to be logged in to leave comment or rate this product.</Typography.Text>}
+          {!auth.isAuthenticated &&
+            <Typography.Text style={{ color: "#B12705" }}>
+              * You need to be logged in to leave comment or rate this product.
+            </Typography.Text>}
+
           <Typography.Title level={3}>Comments</Typography.Title>
           {auth.isAuthenticated && <Comment
             author={<Typography.Text strong>{auth.me?.username}</Typography.Text>}
@@ -116,7 +120,7 @@ const Product = ({ auth, getProduct, history, match, product, isAddingComment })
           />}
 
 
-          {(product.comments || []).map((x) => (
+          {product && product.comments && (product.comments).map((x) => (
             <Comment
               author={<Typography.Text strong>{x.user.name}</Typography.Text>}
               avatar={
@@ -141,4 +145,4 @@ const mapStateToProps = (state) => ({
   isAddingComment: state.product.isAddingComment
 });
 
-export default compose(withRouter, connect(mapStateToProps, { getProduct, addToCart }))(Product);
+export default compose(withRouter, connect(mapStateToProps, { getProduct, addToCart, addComment }))(Product);
