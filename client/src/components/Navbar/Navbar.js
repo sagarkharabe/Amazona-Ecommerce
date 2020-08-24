@@ -23,13 +23,13 @@ const Navbar = ({ auth, logOutUser, history }) => {
           <>
             {auth.me?.isSeller ? (
               <li className="nav-item">
-                <Link to={`/seller/${auth.me.id}`}>Dashboard</Link>
+                <Link to={'/seller-dashboard'}>Dashboard</Link>
               </li>
             ) : (
-                <li className="nav-item">
-                  <Link to="/register-seller">Register as Seller</Link>
-                </li>
-              )}
+              <li className="nav-item">
+                <Link to="/register-seller">Register as Seller</Link>
+              </li>
+            )}
             <li className="flex-1" />
             <img className="avatar" src={auth.me.avatar} />
             <li className="nav-item" onClick={onLogOut}>
@@ -37,14 +37,14 @@ const Navbar = ({ auth, logOutUser, history }) => {
             </li>
           </>
         ) : (
-            <>
-              <li className="flex-1" />
+          <>
+            <li className="flex-1" />
 
-              <li className="nav-item">
-                <Link to="/login">Login</Link>
-              </li>
-            </>
-          )}
+            <li className="nav-item">
+              <Link to="/login">Login</Link>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );

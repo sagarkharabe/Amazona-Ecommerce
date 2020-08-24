@@ -26,7 +26,7 @@ const Home = ({ products: { products }, getProducts, cartItems }) => {
 
   const filteredProducts = useMemo(
     () => filter(products, categoryFilter, nameFilter, priceFilter),
-    [categoryFilter, nameFilter, priceFilter],
+    [categoryFilter, nameFilter, priceFilter, products],
   );
 
   return (

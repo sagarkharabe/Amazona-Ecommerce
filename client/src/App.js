@@ -49,13 +49,14 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
           <Route path="/new" component={CreateProduct} />
           <Route path="/register-seller" component={RegisterSeller} />
           <Route path="/seller/:id" component={Seller} />
+          <Route path="/seller-dashboard" component={Seller} />
           <Route path="/product/:id" component={Product} />
           <Route exact path="/" component={Home} />
           <Route component={NotFound} />
         </Switch>
       ) : (
-          <Loader />
-        )}
+        <Loader />
+      )}
     </>
   );
 };
