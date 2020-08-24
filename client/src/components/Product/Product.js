@@ -12,7 +12,7 @@ const Product = ({ item, history, auth, addToCart }) => {
   const location = useLocation();
 
   const onAddToCart = () => {
-    if (auth.me.isSeller && location.pathname === '/seller-dashboard') {
+    if (auth.me?.isSeller && location.pathname === '/seller-dashboard') {
       history.push(`/seller/product/${item._id}`);
     } else if (auth.isAuthenticated) {
       addToCart(item);
@@ -22,7 +22,7 @@ const Product = ({ item, history, auth, addToCart }) => {
   };
 
   const buttonText =
-    auth.me.isSeller && location.pathname === '/seller-dashboard' ? 'Edit' : 'Add To Cart';
+    auth.me?.isSeller && location.pathname === '/seller-dashboard' ? 'Edit' : 'Add To Cart';
   return (
     <Card
       hoverable
@@ -98,7 +98,7 @@ const Product = ({ item, history, auth, addToCart }) => {
           >
             {buttonText}
           </Button>
-          {!auth.me.isSeller && (
+          {!auth.me?.isSeller && (
             <Button
               style={{ fontSize: 12 }}
               type="link"

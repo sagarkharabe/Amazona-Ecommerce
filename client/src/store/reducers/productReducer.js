@@ -5,11 +5,13 @@ import {
   CREATE_PRODUCT_ERROR,
   CREATE_PRODUCT_LOADING,
   CREATE_PRODUCT_SUCCESS,
+  ADD_COMMENT_LOADING, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL,
 } from '../types';
 
 const initialState = {
   product: {},
   isLoading: false,
+  isAddingComment: false,
   error: null,
 };
 
@@ -53,6 +55,26 @@ export default function (state = initialState, { type, payload }) {
         product: {},
         error: payload,
       };
+    case ADD_COMMENT_LOADING:
+      return {
+        ...state,
+        isAddingComment: true
+      }
+    case ADD_COMMENT_SUCCESS:
+      return {
+        ...state,
+        isAddingComment: false,
+        product: {
+          ...state.product,
+          comments: state.product.comments.unshift(payload.comment)
+        }
+      }
+    case ADD_COMMENT_FAIL:
+      return {
+        ...state,
+        isAddingComment: false,
+        addCommentError: payload
+      }
     default:
       return state;
   }
