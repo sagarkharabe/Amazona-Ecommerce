@@ -97,13 +97,16 @@ const CreateProduct = ({ createProduct, product: { isLoading }, history }) => {
 
         <Form.Item name="price" label="Price (Rs)">
           <InputNumber
+            size="small"
             placeholder={20}
             min={0.01}
             precision={2}
+            inputMode={'decimal'}
             formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
             hasFeedback
             rules={[{ required: true, message: 'Please enter the price!' }]}
+            style={{ width: 150 }}
           />
         </Form.Item>
         <Form.Item
