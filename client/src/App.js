@@ -47,7 +47,7 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/notfound" component={NotFound} />
-          <Route path="/new" component={CreateProduct} />
+          <Route path="/seller/product/add-new" component={CreateProduct} />
           <Route path="/register-seller" component={RegisterSeller} />
           <Route path="/seller/:id" component={Seller} />
           <Route path="/seller-dashboard" component={Dashboard} />

@@ -20,7 +20,7 @@ const Dashboard = ({ auth, products, getSellerProducts, history }) => {
           <Typography.Text strong>
             <span style={{ color: '#C35600' }}>{auth.me.name}'s </span> Dashboard
           </Typography.Text>
-          <Button danger type="primary" style={{ float: 'right' }} onClick={() => history.push('/new')}>
+          <Button danger type="primary" style={{ float: 'right' }} onClick={() => history.push('/seller/product/add-new')}>
             Add New Product
           </Button>
         </span>
