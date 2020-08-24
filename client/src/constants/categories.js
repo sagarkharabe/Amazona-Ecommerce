@@ -12,4 +12,5 @@ export const categories = [
   'Garden & Outdoors',
   'Furniture',
   'Software',
+  'Others',
 ];

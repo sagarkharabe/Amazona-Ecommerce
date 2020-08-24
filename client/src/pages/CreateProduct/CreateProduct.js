@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import Layout from '../../layout/Layout';
 import { Form, Select, InputNumber, Button, Upload, Input } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
@@ -6,6 +7,7 @@ import { categories } from '../../constants/categories';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createProduct } from '../../store/actions/productActions';
+import { v4 as uuidv4 } from 'uuid';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -24,16 +26,19 @@ const normFile = (e) => {
 
 const CreateProduct = ({ createProduct }) => {
   const [form] = Form.useForm();
+  const [fileList, setFileList] = useState([]);
 
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-    createProduct(values);
-  };
-
-  const dummyRequest = ({ file, onSuccess }) => {
-    setTimeout(() => {
-      onSuccess("ok");
-    }, 0);
+    let formData = new FormData();
+    formData.append('api_key', process.env.REACT_APP_CLOUDINARY_API_KEY);
+    formData.append('file', fileList[0]);
+    formData.append('public_id', `${uuidv4()}`);
+    formData.append('timestamp', `${Date.now()}`);
+    formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
+    axios
+      .post(process.env.REACT_APP_CLOUDINARY_UPLOAD_URL, formData)
+      .then((res) => createProduct({ ...values, image: res.data.secure_url }))
+      .catch((err) => console.log(err));
   };
 
   const initialState = {
@@ -69,13 +74,15 @@ const CreateProduct = ({ createProduct }) => {
         </Form.Item>
         <Form.Item
           name="category"
-          label="Category"
+          label="Select"
           hasFeedback
           rules={[{ required: true, message: 'Please select a category!' }]}
         >
           <Select placeholder="Please select a Category">
             {categories.map((item) => (
-              <Option value={item}>{item}</Option>
+              <Option key={item} value={item}>
+                {item}
+              </Option>
             ))}
           </Select>
         </Form.Item>
@@ -90,7 +97,7 @@ const CreateProduct = ({ createProduct }) => {
 
         <Form.Item name="price" label="Price (Rs)">
           <InputNumber
-            placeholder={200}
+            placeholder={20}
             min={0.01}
             precision={2}
             formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -106,10 +113,11 @@ const CreateProduct = ({ createProduct }) => {
           getValueFromEvent={normFile}
         >
           <Upload
-            name="logo"
+            name="image"
             action={process.env.CLOUDINARY_UPLOAD_URL}
             listType="picture"
-            customRequest={dummyRequest}
+            onChange={(info) => setFileList(info.fileList)}
+            beforeUpload={() => false}
           >
             <Button>
               <UploadOutlined /> Click to upload

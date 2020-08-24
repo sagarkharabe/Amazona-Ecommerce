@@ -8,7 +8,6 @@ import {
   CREATE_PRODUCT_LOADING,
   CREATE_PRODUCT_SUCCESS,
 } from '../types';
-import { uploadImage } from '../../util/uploadImage';
 
 export const getProduct = (id, history) => async (dispatch, getState) => {
   dispatch({
@@ -33,18 +32,18 @@ export const getProduct = (id, history) => async (dispatch, getState) => {
   }
 };
 
-export const createProduct = (product) => async (dispatch, getState) => {
+export const createProduct = (product, history) => async (dispatch, getState) => {
   dispatch({
     type: CREATE_PRODUCT_LOADING,
   });
   try {
-    const imgUrl = uploadImage(product.image);
-    console.log({ ...product, image: imgUrl });
-    const response = await axios.post('/api/products', { ...product, image: imgUrl });
+    const options = attachTokenToHeaders(getState);
+    const response = await axios.post('/api/products', product, options);
     dispatch({
       type: CREATE_PRODUCT_SUCCESS,
       payload: response.data.data,
     });
+    history.push('/seller-dashboard');
   } catch (err) {
     dispatch({
       type: CREATE_PRODUCT_ERROR,
