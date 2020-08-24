@@ -8,6 +8,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createProduct } from '../../store/actions/productActions';
 import { v4 as uuidv4 } from 'uuid';
+import { withRouter } from 'react-router-dom';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -24,20 +25,19 @@ const normFile = (e) => {
   return e && e.fileList;
 };
 
-const CreateProduct = ({ createProduct }) => {
+const CreateProduct = ({ createProduct, product: { isLoading }, history }) => {
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState([]);
-
   const onFinish = (values) => {
     let formData = new FormData();
     formData.append('api_key', process.env.REACT_APP_CLOUDINARY_API_KEY);
-    formData.append('file', fileList[0]);
+    formData.append('file', fileList[0].originFileObj);
     formData.append('public_id', `${uuidv4()}`);
     formData.append('timestamp', `${Date.now()}`);
     formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
     axios
       .post(process.env.REACT_APP_CLOUDINARY_UPLOAD_URL, formData)
-      .then((res) => createProduct({ ...values, image: res.data.secure_url }))
+      .then((res) => createProduct({ ...values, image: res.data.secure_url }, history))
       .catch((err) => console.log(err));
   };
 
@@ -119,13 +119,13 @@ const CreateProduct = ({ createProduct }) => {
             onChange={(info) => setFileList(info.fileList)}
             beforeUpload={() => false}
           >
-            <Button>
+            <Button disabled={fileList.length === 1}>
               <UploadOutlined /> Click to upload
             </Button>
           </Upload>
         </Form.Item>
         <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-          <Button type="primary" htmlType="submit">
+          <Button loading={isLoading} type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>
@@ -136,5 +136,6 @@ const CreateProduct = ({ createProduct }) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  product: state.product,
 });
-export default compose(connect(mapStateToProps, { createProduct }))(CreateProduct);
+export default compose(withRouter, connect(mapStateToProps, { createProduct }))(CreateProduct);
