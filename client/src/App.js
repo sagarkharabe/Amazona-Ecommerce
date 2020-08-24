@@ -12,6 +12,7 @@ import NotFound from './pages/NotFound/NotFound';
 import Product from './pages/Product/Product';
 import CreateProduct from './pages/CreateProduct/CreateProduct';
 import RegisterSeller from './pages/RegisterSeller/RegisterSeller';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 import Loader from './components/Loader/Loader';
 
@@ -49,7 +50,7 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
           <Route path="/new" component={CreateProduct} />
           <Route path="/register-seller" component={RegisterSeller} />
           <Route path="/seller/:id" component={Seller} />
-          <Route path="/seller-dashboard" component={Seller} />
+          <Route path="/seller-dashboard" component={Dashboard} />
           <Route path="/product/:id" component={Product} />
           <Route exact path="/" component={Home} />
           <Route component={NotFound} />
