@@ -6,10 +6,11 @@ import { getProduct } from '../../store/actions//productActions';
 import { withRouter } from 'react-router-dom';
 import Layout from '../../layout/Layout';
 import { addToCart } from '../../store/actions/cartActions';
+import { addComment } from "../../store/actions/commentActions";
 import moment from 'moment'
 const { TextArea } = Input;
 
-const Editor = ({ onChange, onSubmit, submitting, value, addToCart }) => (
+const Editor = ({ onChange, onSubmit, submitting, value }) => (
   <>
     <Form.Item>
       <TextArea rows={2} style={{ width: 500 }} onChange={onChange} value={value} />
@@ -22,7 +23,7 @@ const Editor = ({ onChange, onSubmit, submitting, value, addToCart }) => (
   </>
 );
 
-const Product = ({ auth, getProduct, history, match, product }) => {
+const Product = ({ auth, getProduct, history, match, product, isAddingComment }) => {
   const [comment, setComment] = useState('');
 
   //comment this out if you wnat to stay on this page
@@ -30,14 +31,13 @@ const Product = ({ auth, getProduct, history, match, product }) => {
     getProduct(match.params.id, history);
   }, []);
 
+  const onAddToCart = () => addToCart(product);
+
   const onChangeRating = () => {
     auth.isAuthenticated ? console.log('call rating post api here') : history.push('/login');
   };
 
-  const onSubmitComment = () => {
-
-
-  };
+  const onSubmitComment = () => addComment(product, { comment })
 
   const productInfo = useMemo(() => (
     <div style={{ marginBottom: 16 }}>
@@ -54,7 +54,7 @@ const Product = ({ auth, getProduct, history, match, product }) => {
     </div>
   ), [product, auth])
 
-  const onAddToCart = () => addToCart(product);
+
   return (
     <Layout>
       <div
@@ -107,7 +107,7 @@ const Product = ({ auth, getProduct, history, match, product }) => {
             }
             content={
               <Editor
-                // submitting={isSubmittingComment}
+                submitting={isAddingComment}
                 onChange={(e) => setComment(e.target.value)}
                 onSubmit={onSubmitComment}
                 value={comment}
@@ -138,6 +138,7 @@ const Product = ({ auth, getProduct, history, match, product }) => {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   product: state.product.product,
+  isAddingComment: state.product.isAddingComment
 });
 
 export default compose(withRouter, connect(mapStateToProps, { getProduct, addToCart }))(Product);

@@ -13,6 +13,7 @@ const initialState = {
   isLoading: false,
   isAddingComment: false,
   error: null,
+  addCommentError: null,
 };
 
 export default function (state = initialState, { type, payload }) {

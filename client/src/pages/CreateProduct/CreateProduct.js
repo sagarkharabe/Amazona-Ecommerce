@@ -69,7 +69,7 @@ const CreateProduct = ({ createProduct }) => {
         </Form.Item>
         <Form.Item
           name="category"
-          label="Select"
+          label="Category"
           hasFeedback
           rules={[{ required: true, message: 'Please select a category!' }]}
         >
@@ -90,7 +90,7 @@ const CreateProduct = ({ createProduct }) => {
 
         <Form.Item name="price" label="Price (Rs)">
           <InputNumber
-            placeholder={20}
+            placeholder={200}
             min={0.01}
             precision={2}
             formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
