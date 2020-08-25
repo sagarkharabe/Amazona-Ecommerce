@@ -6,10 +6,12 @@ import {
   CREATE_PRODUCT_LOADING,
   CREATE_PRODUCT_SUCCESS,
   ADD_COMMENT_LOADING, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL,
+  ADD_RATING_SUCCESS, ADD_RATING_FAIL,
 } from '../types';
 
 const initialState = {
   product: {},
+  userRating: {},
   isLoading: false,
   isAddingComment: false,
   error: null,
@@ -75,6 +77,11 @@ export default function (state = initialState, { type, payload }) {
         ...state,
         isAddingComment: false,
         addCommentError: payload
+      }
+    case ADD_RATING_SUCCESS:
+      return {
+        ...state,
+        userRating: payload.rating
       }
     default:
       return state;

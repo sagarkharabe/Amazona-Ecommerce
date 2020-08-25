@@ -67,7 +67,7 @@ const Product = ({ item, history, auth, addToCart }) => {
         </Space>
         <div>
           <Typography.Text>{item.avgRating?.toFixed(1)} </Typography.Text>
-          <Rate disabled={!auth.isAuthenticated} allowHalf value={item.avgRating} />
+          <Rate disabled allowHalf value={item.avgRating} />
         </div>
         <br />
         <div
