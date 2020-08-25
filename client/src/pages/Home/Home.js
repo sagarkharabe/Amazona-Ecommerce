@@ -60,7 +60,7 @@ const Home = ({ products: { products }, getProducts, cartItems }) => {
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', paddingTop: 16 }}>
           {filteredProducts.length > 0 ? filteredProducts.map((product) => (
-            <ProductCard item={product} />
+            <ProductCard key={product._id} item={product} />
           )) : <Typography.Text strong>No Results found.. &#128533; </Typography.Text>}
         </div>
       </div>
