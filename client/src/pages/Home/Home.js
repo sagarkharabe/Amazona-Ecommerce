@@ -39,13 +39,18 @@ const Home = ({ products: { products }, getProducts, cartItems }) => {
             defaultValue="Select a Category"
             value={categoryFilter}
             onChange={setCategoryFilter}
-            style={{ marginRight: 20, width: 200 }}
           >
             <Option value={''}>All Categories</Option>
             {categories.map((x) => (
               <Option value={x}>{x}</Option>
             ))}
           </Select>
+          <Search
+            placeholder="Search..."
+            onSearch={setNameFilter}
+            style={{ flex: 1 }}
+            enterButton
+          />
           <Select
             defaultValue="Sort Price by"
             value={priceFilter}
@@ -56,12 +61,13 @@ const Home = ({ products: { products }, getProducts, cartItems }) => {
             <Option value={'asc'}>Price: Lowest to Highest</Option>
             <Option value={'desc'}>Price: Highest to Lowest</Option>
           </Select>
-          <Search placeholder="Search..." onSearch={setNameFilter} style={{ flex: 1 }} enterButton />
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', paddingTop: 16 }}>
-          {filteredProducts.length > 0 ? filteredProducts.map((product) => (
-            <ProductCard key={product._id} item={product} />
-          )) : <Typography.Text strong>No Results found.. &#128533; </Typography.Text>}
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => <ProductCard key={product._id} item={product} />)
+          ) : (
+            <Typography.Text strong>No Results found.. &#128533; </Typography.Text>
+          )}
         </div>
       </div>
       {cartItems.length ? <Cart /> : null}
