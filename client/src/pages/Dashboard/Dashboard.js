@@ -9,30 +9,35 @@ import ProductCard from '../../components/Product/Product';
 
 const Dashboard = ({ auth, products, getSellerProducts, history }) => {
   useEffect(() => {
-    getSellerProducts(auth.me.id);
+    getSellerProducts(auth.me?.id);
   }, []);
 
-  if (!auth.me.isSeller) return <Redirect to="/register-seller" />;
+  if (!auth.me?.isSeller) return <Redirect to="/register-seller" />;
   return (
     <Layout>
-      <div>
-        <span>
-          <Typography.Text strong>
-            <span style={{ color: '#C35600' }}>{auth.me.name}'s </span> Dashboard
-          </Typography.Text>
-          <Button
-            type="primary"
-            style={{ float: 'right' }}
-            onClick={() => history.push('/seller/product/add-new')}
-          >
-            Add New Product
-          </Button>
-        </span>
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          {products?.map((product) => (
+      <div style={{ padding: 20 }}>
+        <Button
+          type="primary"
+          style={{ float: 'right' }}
+          onClick={() => history.push('/seller/product/add-new')}
+        >
+          Add New Product
+        </Button>
+        <Typography.Text strong>
+          <span style={{ color: '#C35600', fontSize: 20 }}>{auth.me.storeName}'s </span>store
+          dashboard
+        </Typography.Text>
+        <br />
+        <Typography.Text type="secondary">Manage all your products here.</Typography.Text>
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {products?.length > 0 ? (
+          products?.map((product) => (
             <ProductCard key={product._id} item={product} type={'admin'} />
-          ))}
-        </div>
+          ))
+        ) : (
+          <Typography.Text strong>No Results found.. &#128533; </Typography.Text>
+        )}
       </div>
     </Layout>
   );

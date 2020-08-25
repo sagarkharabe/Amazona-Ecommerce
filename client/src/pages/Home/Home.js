@@ -39,7 +39,7 @@ const Home = ({ products: { products }, getProducts, cartItems }) => {
             defaultValue="Select a Category"
             value={categoryFilter}
             onChange={setCategoryFilter}
-            style={{ marginRight: 20 }}
+            style={{ marginRight: 20, width: 200 }}
           >
             <Option value={''}>Select a Category</Option>
             {categories.map((x) => (
