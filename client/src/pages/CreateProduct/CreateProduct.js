@@ -29,16 +29,20 @@ const CreateProduct = ({ createProduct, product: { isLoading }, history }) => {
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState([]);
   const onFinish = (values) => {
-    let formData = new FormData();
-    formData.append('api_key', process.env.REACT_APP_CLOUDINARY_API_KEY);
-    formData.append('file', fileList[0].originFileObj);
-    formData.append('public_id', `${uuidv4()}`);
-    formData.append('timestamp', `${Date.now()}`);
-    formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
-    axios
-      .post(process.env.REACT_APP_CLOUDINARY_UPLOAD_URL, formData)
-      .then((res) => createProduct({ ...values, image: res.data.secure_url }, history))
-      .catch((err) => console.log(err));
+    if (fileList.length) {
+      let formData = new FormData();
+      formData.append('api_key', process.env.REACT_APP_CLOUDINARY_API_KEY);
+      formData.append('file', fileList[0].originFileObj);
+      formData.append('public_id', `${uuidv4()}`);
+      formData.append('timestamp', `${Date.now()}`);
+      formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
+      axios
+        .post(process.env.REACT_APP_CLOUDINARY_UPLOAD_URL, formData)
+        .then((res) => createProduct({ ...values, image: res.data.secure_url }, history))
+        .catch((err) => console.log(err));
+    } else {
+      createProduct(values, history);
+    }
   };
 
   const initialState = {
@@ -117,6 +121,7 @@ const CreateProduct = ({ createProduct, product: { isLoading }, history }) => {
             hasFeedback
             rules={[{ required: true, message: 'Please enter the price!' }]}
             style={{ width: 150 }}
+            required
           />
         </Form.Item>
         <Form.Item

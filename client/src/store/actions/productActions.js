@@ -44,7 +44,7 @@ export const createProduct = (product, history) => async (dispatch, getState) =>
   });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.post('/api/products', product, options);
+    const response = await axios.post('/api/products/ss', product, options);
     dispatch({
       type: CREATE_PRODUCT_SUCCESS,
       payload: response.data.data,
@@ -64,7 +64,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
   });
   try {
     const options = attachTokenToHeaders(getState);
-    await axios.delete(`/api/products/${id}`, options);
+    const response = await axios.delete(`/api/products/${id}`, options);
     dispatch({
       type: DELETE_PRODUCT_SUCCESS,
     });
