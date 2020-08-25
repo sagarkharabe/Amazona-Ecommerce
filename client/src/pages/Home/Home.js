@@ -7,6 +7,7 @@ import { getProducts } from '../../store/actions/productsActions';
 import ProductCard from '../../components/Product/Product';
 import { categories } from '../../constants/categories';
 import { filter } from '../../util/filterProducts';
+import { openNotificationWithIcon } from '../../components/Notification/Notification';
 
 import Layout from '../../layout/Layout';
 
@@ -15,10 +16,17 @@ import './styles.css';
 const { Option } = Select;
 const { Search } = Input;
 
-const Home = ({ products: { products }, getProducts, cartItems }) => {
+const Home = ({ products: { products, error }, getProducts, cartItems }) => {
   useEffect(() => {
     getProducts();
   }, []);
+
+  useEffect(() => {
+    openNotificationWithIcon({
+      type: 'error',
+      message: error,
+    });
+  }, [error]);
 
   const [categoryFilter, setCategoryFilter] = useState('');
   const [nameFilter, setNameFilter] = useState('');

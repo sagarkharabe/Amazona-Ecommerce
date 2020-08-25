@@ -14,6 +14,7 @@ import CreateProduct from './pages/CreateProduct/CreateProduct';
 import UpdateProduct from './pages/UpdateProduct/UpdateProduct';
 import RegisterSeller from './pages/RegisterSeller/RegisterSeller';
 import Dashboard from './pages/Dashboard/Dashboard';
+import { openNotificationWithIcon } from './components/Notification/Notification';
 
 import Loader from './components/Loader/Loader';
 
@@ -23,6 +24,15 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
   useEffect(() => {
     loadMe();
   }, [loadMe]);
+
+  useEffect(() => {
+    if (auth.error) {
+      openNotificationWithIcon({
+        type: 'error',
+        message: auth.error,
+      });
+    }
+  }, [auth.error]);
 
   useEffect(() => {
     if (window.location.hash === '#_=_') window.location.hash = '';

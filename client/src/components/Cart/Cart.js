@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Typography } from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import CartItem from '../CartItem/CartItem';
+import { openNotificationWithIcon } from '..//Notification/Notification';
 
 const Cart = ({ auth, cartItems, history }) => {
   const onHandleCheckout = () => {
     auth.isAuthenticated ? console.log('allow checkout') : history.push('/login');
   };
+
+  useEffect(() => {
+    if (auth.error) {
+      openNotificationWithIcon({
+        type: 'error',
+        message: auth.error,
+      });
+    }
+  }, [auth.error]);
+
   return (
     <div
       style={{

@@ -6,11 +6,21 @@ import { withRouter, Redirect } from 'react-router-dom';
 import Layout from '../../layout/Layout';
 import { getSellerProducts } from '../../store/actions/productsActions';
 import ProductCard from '../../components/Product/Product';
+import { openNotificationWithIcon } from '../../components/Notification/Notification';
 
 const Dashboard = ({ auth, products, getSellerProducts, history }) => {
   useEffect(() => {
     getSellerProducts(auth.me?.id);
   }, []);
+
+  useEffect(() => {
+    if (auth.error) {
+      openNotificationWithIcon({
+        type: 'error',
+        message: auth.error,
+      });
+    }
+  }, [auth.error]);
 
   if (!auth.me?.isSeller) return <Redirect to="/register-seller" />;
   return (

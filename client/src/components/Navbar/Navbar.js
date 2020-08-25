@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Menu, Typography } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
+import { openNotificationWithIcon } from '..//Notification/Notification';
 
 import { logOutUser } from '../../store/actions/authActions';
 import './styles.css';
@@ -14,6 +15,15 @@ const Navbar = ({ auth, logOutUser, history }) => {
   const onLogOut = () => {
     logOutUser(history);
   };
+
+  useEffect(() => {
+    if (auth.error) {
+      openNotificationWithIcon({
+        type: 'error',
+        message: auth.error,
+      });
+    }
+  }, [auth.error]);
 
   return (
     <Menu theme="dark" className="navbar flex-1" mode="horizontal">

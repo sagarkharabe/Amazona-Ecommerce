@@ -12,6 +12,7 @@ const Seller = ({ seller, products, getSellerProducts, cartItems, match }) => {
   useEffect(() => {
     getSellerProducts(match.params.id);
   }, []);
+
   return (
     <Layout>
       <div>
