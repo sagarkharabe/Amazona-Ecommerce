@@ -51,7 +51,7 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
           <Route path="/seller/product/add-new" component={CreateProduct} />
           <Route path="/register-seller" component={RegisterSeller} />
           <Route path="/seller/:id" component={Seller} />
-          <Route path="/seller-product/:id" component={CreateProduct} />
+          <Route path="/seller-product/:id" component={UpdateProduct} />
           <Route path="/seller-dashboard" component={Dashboard} />
           <Route path="/product/:id" component={Product} />
           <Route exact path="/" component={Home} />

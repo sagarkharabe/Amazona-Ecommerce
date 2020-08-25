@@ -25,6 +25,7 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 
 const Product = ({ auth, getProduct, history, match, product, isAddingComment, addToCart, addComment }) => {
   const [comment, setComment] = useState('');
+  const [rate, setrate] = useState(0)
 
   //comment this out if you wnat to stay on this page
   useEffect(() => {
@@ -34,7 +35,7 @@ const Product = ({ auth, getProduct, history, match, product, isAddingComment, a
   const onAddToCart = () => addToCart(product);
 
   const onChangeRating = () => {
-    auth.isAuthenticated ? console.log('call rating post api here') : history.push('/login');
+
   };
 
   const onSubmitComment = () => addComment(product, { comment })
@@ -42,9 +43,9 @@ const Product = ({ auth, getProduct, history, match, product, isAddingComment, a
   const productInfo = useMemo(() => (
     <div style={{ marginBottom: 16 }}>
       <Typography.Title level={3}>{product.name}<span style={{ fontSize: 12 }}>&nbsp; By</span> <span style={{ fontSize: 14, color: '#C35600' }}>{product.seller?.storeName}</span></Typography.Title>
-      <Typography.Text style={{ fontSize: 16 }}>{product.description}</Typography.Text>
-      <Typography.Text strong style={{ fontSize: 14 }}>Brand: {product.brand}</Typography.Text>
-      <Typography.Text strong style={{ fontSize: 14 }}>Category: {product.category}</Typography.Text>
+      <Typography.Text style={{ fontSize: 16 }}>{product.description}</Typography.Text><br /><br />
+      <Typography.Text strong style={{ fontSize: 14 }}>Brand: {product.brand}</Typography.Text><br />
+      <Typography.Text strong style={{ fontSize: 14 }}>Category: {product.category}</Typography.Text><br />
       <div>
         <Typography.Text style={{ fontSize: 16 }}>{product.avgRating?.toFixed(1)}{' '}</Typography.Text>
         <Rate disabled allowHalf value={product.avgRating} onChange={onChangeRating} />
@@ -98,10 +99,16 @@ const Product = ({ auth, getProduct, history, match, product, isAddingComment, a
         </div>
         <div>
 
-          {!auth.isAuthenticated &&
+          {!auth.isAuthenticated ?
             <Typography.Text style={{ color: "#B12705" }}>
               * You need to be logged in to leave comment or rate this product.
-            </Typography.Text>}
+            </Typography.Text> :
+            (<div>
+              <Typography.Text strong>Rate this product &nbsp;</Typography.Text>
+              <Rate allowHalf allowClear value={rate} onChange={() => onChangeRating()} /><br /> <br />
+            </div>)}
+
+
 
           <Typography.Title level={3}>Comments</Typography.Title>
           {auth.isAuthenticated && <Comment
