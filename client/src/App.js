@@ -11,6 +11,7 @@ import Seller from './pages/Seller/Seller';
 import NotFound from './pages/NotFound/NotFound';
 import Product from './pages/Product/Product';
 import CreateProduct from './pages/CreateProduct/CreateProduct';
+import UpdateProduct from './pages/UpdateProduct/UpdateProduct';
 import RegisterSeller from './pages/RegisterSeller/RegisterSeller';
 import Dashboard from './pages/Dashboard/Dashboard';
 
@@ -50,6 +51,7 @@ const App = ({ logInUserWithOauth, auth, loadMe }) => {
           <Route path="/seller/product/add-new" component={CreateProduct} />
           <Route path="/register-seller" component={RegisterSeller} />
           <Route path="/seller/:id" component={Seller} />
+          <Route path="/seller-product/:id" component={CreateProduct} />
           <Route path="/seller-dashboard" component={Dashboard} />
           <Route path="/product/:id" component={Product} />
           <Route exact path="/" component={Home} />

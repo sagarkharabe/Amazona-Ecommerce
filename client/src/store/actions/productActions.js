@@ -10,13 +10,16 @@ import {
   DELETE_PRODUCT_FAIL,
   DELETE_PRODUCT_LOADING,
   DELETE_PRODUCT_SUCCESS,
+  EDIT_PRODUCT_FAIL,
+  EDIT_PRODUCT_LOADING,
+  EDIT_PRODUCT_SUCCESS,
 } from '../types';
 
 export const getProduct = (id, history) => async (dispatch, getState) => {
   dispatch({
     type: GET_SINGLE_PRODUCT_LOADING,
   });
-
+  
   try {
     const options = attachTokenToHeaders(getState);
     const response = await axios.get(`/api/products/${id}`, options);
@@ -68,6 +71,25 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
   } catch (err) {
     dispatch({
       type: DELETE_PRODUCT_FAIL,
+      payload: err.response.data.message,
+    });
+  }
+};
+
+export const editProduct = (product) => async (dispatch, getState) => {
+  dispatch({
+    type: EDIT_PRODUCT_LOADING,
+  });
+  try {
+    const options = attachTokenToHeaders(getState);
+    const response = await axios.put(`/api/products/${product._id}`, product, options);
+    dispatch({
+      type: EDIT_PRODUCT_SUCCESS,
+      payload: response.data.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: EDIT_PRODUCT_FAIL,
       payload: err.response.data.message,
     });
   }

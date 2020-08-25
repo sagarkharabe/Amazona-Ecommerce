@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Button, Rate, Typography, Space, Modal } from 'antd';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { getProduct, deleteProduct } from '../../store/actions//productActions';
+import { deleteProduct } from '../../store/actions//productActions';
 import { withRouter } from 'react-router-dom';
 import { addToCart } from '../../store/actions/cartActions';
 import { EditOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
@@ -25,6 +25,12 @@ const Product = ({ item, history, auth, addToCart, type, deleteProduct }) => {
     });
   };
 
+  const onClickCard = () => {
+    if (type !== 'admin') {
+      history.push(`/product/${item._id}`);
+    } else return;
+  };
+
   return (
     <Card
       hoverable
@@ -44,7 +50,7 @@ const Product = ({ item, history, auth, addToCart, type, deleteProduct }) => {
         </Typography.Title>
       }
       headStyle={{ textOverflow: 'ellipsis' }}
-      onClick={() => type !== 'admin' && history.push(`/product/${item._id}`)}
+      onClick={() => onClickCard()}
     >
       <div
         style={{
@@ -95,7 +101,11 @@ const Product = ({ item, history, auth, addToCart, type, deleteProduct }) => {
         >
           {type === 'admin' ? (
             <>
-              <Button block style={{ background: '#000', color: '#fff' }}>
+              <Button
+                block
+                style={{ background: '#000', color: '#fff' }}
+                onClick={() => history.push(`/seller-product/${item._id}`)}
+              >
                 <EditOutlined />
                 Edit
               </Button>
@@ -136,7 +146,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps, { getProduct, addToCart, deleteProduct }),
-)(Product);
+export default compose(withRouter, connect(mapStateToProps, { addToCart, deleteProduct }))(Product);

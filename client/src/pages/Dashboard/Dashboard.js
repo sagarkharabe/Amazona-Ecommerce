@@ -10,7 +10,7 @@ import ProductCard from '../../components/Product/Product';
 const Dashboard = ({ auth, products, getSellerProducts, history }) => {
   useEffect(() => {
     getSellerProducts(auth.me.id);
-  }, [products]);
+  }, []);
 
   if (!auth.me.isSeller) return <Redirect to="/register-seller" />;
   return (

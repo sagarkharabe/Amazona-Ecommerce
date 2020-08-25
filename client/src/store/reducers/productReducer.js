@@ -11,6 +11,9 @@ import {
   DELETE_PRODUCT_FAIL,
   DELETE_PRODUCT_LOADING,
   DELETE_PRODUCT_SUCCESS,
+  EDIT_PRODUCT_FAIL,
+  EDIT_PRODUCT_LOADING,
+  EDIT_PRODUCT_SUCCESS,
 } from '../types';
 
 const initialState = {
@@ -99,6 +102,24 @@ export default function (state = initialState, { type, payload }) {
         ...state,
         isLoading: false,
         product: {},
+        error: payload,
+      };
+    case EDIT_PRODUCT_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+    case EDIT_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        product: payload.product,
+      };
+    case EDIT_PRODUCT_FAIL:
+      return {
+        ...state,
+        isLoading: false,
         error: payload,
       };
     default:
