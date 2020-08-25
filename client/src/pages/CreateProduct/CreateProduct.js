@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Layout from '../../layout/Layout';
-import { Form, Select, InputNumber, Button, Upload, Input } from 'antd';
+import { Form, Select, InputNumber, Button, Upload, Input, Typography } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { categories } from '../../constants/categories';
 import { compose } from 'redux';
@@ -58,9 +58,14 @@ const CreateProduct = ({ createProduct, product: { isLoading }, history }) => {
         {...formItemLayout}
         onFinish={onFinish}
         initialValues={initialState}
-        style={{ diplay: 'flex', flexDirection: 'column', alignItems: 'center', width: '60%' }}
+        style={{
+          diplay: 'grid',
+          placeItems: 'center',
+          width: '60%',
+          margin: 'auto',
+        }}
       >
-        <h1>Fill all relevant fields to upload a new product</h1>
+        <Typography.Title style={{ textAlign: 'center' }}>Create a New Product</Typography.Title>
         <Form.Item
           name="name"
           label="name"
@@ -69,8 +74,13 @@ const CreateProduct = ({ createProduct, product: { isLoading }, history }) => {
         >
           <TextArea label="name" placeholder="Product name" rows={1} />
         </Form.Item>
-        <Form.Item name="description" label="Description">
-          <TextArea value={'adfs'} placeholder="Product name" rows={3} />
+        <Form.Item
+          name="description"
+          label="Description"
+          hasFeedback
+          rules={[{ required: true, message: 'Please enter a Description!' }]}
+        >
+          <TextArea value={'adfs'} placeholder="Product Description" rows={3} />
         </Form.Item>
         <Form.Item
           name="category"
@@ -92,7 +102,7 @@ const CreateProduct = ({ createProduct, product: { isLoading }, history }) => {
           hasFeedback
           rules={[{ required: true, message: 'Please enter the brand!' }]}
         >
-          <TextArea placeholder="Product name" rows={1} />
+          <TextArea placeholder="Brand name" rows={1} />
         </Form.Item>
 
         <Form.Item name="price" label="Price (Rs)">
