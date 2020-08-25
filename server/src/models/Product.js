@@ -47,7 +47,7 @@ export const validateProduct = (product) => {
     price: Joi.number().precision(2).min(0).required(),
     brand: Joi.string().min(2).max(80).required(),
     image: Joi.string().required(),
-    description: Joi.string().max(255)  ,
+    description: Joi.string().max(255),
   };
 
   return Joi.validate(product, validateProduct)

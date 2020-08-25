@@ -19,7 +19,7 @@ export const getProduct = (id, history) => async (dispatch, getState) => {
   dispatch({
     type: GET_SINGLE_PRODUCT_LOADING,
   });
-  
+
   try {
     const options = attachTokenToHeaders(getState);
     const response = await axios.get(`/api/products/${id}`, options);
@@ -76,17 +76,18 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
   }
 };
 
-export const editProduct = (product) => async (dispatch, getState) => {
+export const editProduct = (id, product, history) => async (dispatch, getState) => {
   dispatch({
     type: EDIT_PRODUCT_LOADING,
   });
   try {
     const options = attachTokenToHeaders(getState);
-    const response = await axios.put(`/api/products/${product._id}`, product, options);
+    const response = await axios.put(`/api/products/${id}`, product, options);
     dispatch({
       type: EDIT_PRODUCT_SUCCESS,
       payload: response.data.data,
     });
+    history.push('/seller-dashboard');
   } catch (err) {
     dispatch({
       type: EDIT_PRODUCT_FAIL,

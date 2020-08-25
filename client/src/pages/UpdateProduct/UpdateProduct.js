@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Layout from '../../layout/Layout';
-import { Form, Select, InputNumber, Button, Upload, Input } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Form, Select, InputNumber, Button, Upload, Input, Typography } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
 import { categories } from '../../constants/categories';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { createProduct } from '../../store/actions/productActions';
+import { editProduct, getProduct } from '../../store/actions/productActions';
 import { v4 as uuidv4 } from 'uuid';
 import { withRouter } from 'react-router-dom';
-import { getProduct } from '../../store/actions//productActions';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -27,61 +26,106 @@ const normFile = (e) => {
 };
 
 const UpdateProduct = ({
-  createProduct,
+  editProduct,
   product: { isLoading, product },
   history,
   getProduct,
   match,
 }) => {
-  console.log('asdasd', product);
   useEffect(() => {
     getProduct(match.params.id, history);
   }, []);
   const [form] = Form.useForm();
-  const [fileList, setFileList] = useState([]);
+
   const onFinish = (values) => {
     let formData = new FormData();
     formData.append('api_key', process.env.REACT_APP_CLOUDINARY_API_KEY);
-    formData.append('file', fileList[0].originFileObj);
+    formData.append('file', values.image[0].originFileObj);
     formData.append('public_id', `${uuidv4()}`);
     formData.append('timestamp', `${Date.now()}`);
     formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
     axios
       .post(process.env.REACT_APP_CLOUDINARY_UPLOAD_URL, formData)
-      .then((res) => createProduct({ ...values, image: res.data.secure_url }, history))
+      .then((res) => editProduct(product._id, { ...values, image: res.data.secure_url }, history))
       .catch((err) => console.log(err));
   };
-
   const initialState = {
-    name: product.name,
-    category: product.category,
-    price: product.price,
-    brand: product.brand,
-    description: product.description,
-    image: product.image || 'https://www.freeiconspng.com/uploads/no-image-icon-4.png',
+    name: product?.name || '',
+    category: product?.category || 'Others',
+    price: product?.price || '',
+    brand: product?.brand || '',
+    description: product?.description || '',
+    image: '',
   };
 
+  useEffect(() => {
+    form.resetFields();
+  }, [initialState]);
   return (
     <Layout>
+      <Typography.Title level={3}>Update Product</Typography.Title>
+      <div
+        style={{
+          width: '500px',
+          height: '400px',
+          display: 'flex',
+          margin: 'auto',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderWidth: '2px',
+          borderStyle: 'solid',
+          borderColor: '#f2f2f2',
+          marginBottom: '20px',
+        }}
+      >
+        <img
+          alt="example"
+          width="auto"
+          height="auto"
+          style={{ maxWidth: '100%', maxHeight: '280px' }}
+          src={product?.image || 'https://www.freeiconspng.com/uploads/no-image-icon-4.png'}
+        />
+      </div>
       <Form
         name="validate_other"
         form={form}
         {...formItemLayout}
         onFinish={onFinish}
         initialValues={initialState}
-        style={{ diplay: 'flex', flexDirection: 'column', alignItems: 'center', width: '60%' }}
+        style={{
+          display: 'grid',
+          placeItems: 'auto center',
+          alignItems: 'stretch',
+        }}
       >
-        <h1>Fill all relevant fields to upload a new product</h1>
+        <Form.Item
+          name="image"
+          label="Upload"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+        >
+          <Upload
+            name="image"
+            multiple={false}
+            action={process.env.CLOUDINARY_UPLOAD_URL}
+            listType="picture"
+            beforeUpload={() => false}
+          >
+            <Button disabled={false}>
+              <EditOutlined /> Change Image
+            </Button>
+          </Upload>
+        </Form.Item>
         <Form.Item
           name="name"
           label="name"
           hasFeedback
           rules={[{ required: true, message: 'Please enter a product name!' }]}
         >
-          <TextArea defaultValue={product.name} label="name" placeholder="Product name" rows={1} />
+          <TextArea label="name" placeholder="Product name" rows={1} />
         </Form.Item>
         <Form.Item name="description" label="Description">
-          <TextArea defaultValue={product.description} placeholder="Description" rows={3} />
+          <TextArea placeholder="Description" rows={3} />
         </Form.Item>
         <Form.Item
           name="category"
@@ -89,7 +133,7 @@ const UpdateProduct = ({
           hasFeedback
           rules={[{ required: true, message: 'Please select a category!' }]}
         >
-          <Select placeholder="Please select a Category" defaultValue={product.category}>
+          <Select placeholder="Please select a Category">
             {categories.map((item) => (
               <Option key={item} value={item}>
                 {item}
@@ -120,24 +164,6 @@ const UpdateProduct = ({
             style={{ width: 150 }}
           />
         </Form.Item>
-        <Form.Item
-          name="image"
-          label="Upload"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-        >
-          <Upload
-            name="image"
-            action={process.env.CLOUDINARY_UPLOAD_URL}
-            listType="picture"
-            onChange={(info) => setFileList(info.fileList)}
-            beforeUpload={() => false}
-          >
-            <Button disabled={fileList.length === 1}>
-              <UploadOutlined /> Click to upload
-            </Button>
-          </Upload>
-        </Form.Item>
         <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
           <Button loading={isLoading} type="primary" htmlType="submit">
             Update
@@ -154,5 +180,5 @@ const mapStateToProps = (state) => ({
 });
 export default compose(
   withRouter,
-  connect(mapStateToProps, { createProduct, getProduct }),
+  connect(mapStateToProps, { getProduct, editProduct }),
 )(UpdateProduct);
