@@ -21,7 +21,7 @@ const Product = ({ item, history, auth, addToCart, type, deleteProduct }) => {
       title: `Are you sure you want to delete ${product.name}?`,
       icon: <ExclamationCircleOutlined />,
       onOk: () => deleteProduct(product._id),
-      onCancel: () => { },
+      onCancel: () => {},
     });
   };
 
@@ -114,28 +114,28 @@ const Product = ({ item, history, auth, addToCart, type, deleteProduct }) => {
               </Button>
             </>
           ) : (
-              <>
-                <Button
-                  type="primary"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onAddToCart();
-                  }}
-                >
-                  Add to Cart
+            <>
+              <Button
+                type="primary"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onAddToCart();
+                }}
+              >
+                Add to Cart
               </Button>
-                <Button
-                  style={{ fontSize: 12 }}
-                  type="link"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    history.push(`/seller/${item.seller}`);
-                  }}
-                >
-                  More from seller
+              <Button
+                style={{ fontSize: 12 }}
+                type="link"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  history.push(`/seller/${item.seller}`);
+                }}
+              >
+                More from seller
               </Button>
-              </>
-            )}
+            </>
+          )}
         </div>
       </div>
     </Card>
