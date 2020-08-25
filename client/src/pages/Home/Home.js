@@ -41,22 +41,22 @@ const Home = ({ products: { products }, getProducts, cartItems }) => {
             onChange={setCategoryFilter}
             style={{ marginRight: 20, width: 200 }}
           >
-            <Option value={''}>Select a Category</Option>
+            <Option value={''}>All Categories</Option>
             {categories.map((x) => (
               <Option value={x}>{x}</Option>
             ))}
           </Select>
           <Select
-            defaultValue="Select a Category"
+            defaultValue="Sort Price by"
             value={priceFilter}
             onChange={setPriceFilter}
             style={{ marginRight: 20 }}
           >
-            <Option value={''}>Set Price Filter</Option>
-            <Option value={'asc'}>Lowest to Highest</Option>
-            <Option value={'desc'}>Highest to Lowest</Option>
+            <Option value={''}>Sort By: All</Option>
+            <Option value={'asc'}>Price: Lowest to Highest</Option>
+            <Option value={'desc'}>Price: Highest to Lowest</Option>
           </Select>
-          <Search placeholder="Search by name" onSearch={setNameFilter} style={{ width: 250 }} enterButton />
+          <Search placeholder="Search..." onSearch={setNameFilter} style={{ width: 250 }} enterButton />
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', paddingTop: 16 }}>
           {filteredProducts.length > 0 ? filteredProducts.map((product) => (

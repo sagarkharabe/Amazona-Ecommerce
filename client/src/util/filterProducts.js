@@ -1,7 +1,6 @@
-export const filter = (products, category, name, price) => {
+export const filter = (products, category, keyword, price) => {
   const arr = products.filter(
-    (prod) =>
-      prod.category.includes(category) && prod.name.toLowerCase().includes(name.toLowerCase()),
+    (prod) => prod.category.includes(category) && filterBySearchKeyword(prod, keyword),
   );
   if (price === 'asc') {
     arr.sort((a, b) => a.price - b.price);
@@ -10,4 +9,17 @@ export const filter = (products, category, name, price) => {
     arr.sort((a, b) => b.price - a.price);
   }
   return arr;
+};
+
+const filterBySearchKeyword = (product, keyword) => {
+  if (
+    product.name.toLowerCase().includes(keyword.toLowerCase()) ||
+    product.description.toLowerCase().includes(keyword.toLowerCase()) ||
+    product.brand.toLowerCase().includes(keyword.toLowerCase())
+  ) {
+    return true;
+  }
+  {
+    return false;
+  }
 };
