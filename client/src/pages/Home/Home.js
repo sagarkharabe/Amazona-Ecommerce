@@ -24,7 +24,7 @@ const Home = ({ products: { products, error }, getProducts, cartItems }) => {
   useEffect(() => {
     openNotificationWithIcon({
       type: 'error',
-      message: error,
+      message: error || 'Oops, Something went wrong!',
     });
   }, [error]);
 
