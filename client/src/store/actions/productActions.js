@@ -68,6 +68,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
     dispatch({
       type: DELETE_PRODUCT_SUCCESS,
     });
+    window.location.reload(false);
   } catch (err) {
     dispatch({
       type: DELETE_PRODUCT_FAIL,

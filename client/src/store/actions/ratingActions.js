@@ -11,6 +11,7 @@ export const addRating = (product, data) => async (dispatch, getState) => {
       type: ADD_RATING_SUCCESS,
       payload: { rating: response.data.data },
     });
+    window.location.reload(false);
   } catch (err) {
     dispatch({
       type: ADD_RATING_FAIL,
