@@ -7,6 +7,9 @@ import {
   CREATE_PRODUCT_ERROR,
   CREATE_PRODUCT_LOADING,
   CREATE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_FAIL,
+  DELETE_PRODUCT_LOADING,
+  DELETE_PRODUCT_SUCCESS,
 } from '../types';
 
 export const getProduct = (id, history) => async (dispatch, getState) => {
@@ -47,6 +50,24 @@ export const createProduct = (product, history) => async (dispatch, getState) =>
   } catch (err) {
     dispatch({
       type: CREATE_PRODUCT_ERROR,
+      payload: err.response.data.message,
+    });
+  }
+};
+
+export const deleteProduct = (id) => async (dispatch, getState) => {
+  dispatch({
+    type: DELETE_PRODUCT_LOADING,
+  });
+  try {
+    const options = attachTokenToHeaders(getState);
+    await axios.delete(`/api/products/${id}`, options);
+    dispatch({
+      type: DELETE_PRODUCT_SUCCESS,
+    });
+  } catch (err) {
+    dispatch({
+      type: DELETE_PRODUCT_FAIL,
       payload: err.response.data.message,
     });
   }

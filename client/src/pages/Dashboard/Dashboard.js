@@ -10,7 +10,7 @@ import ProductCard from '../../components/Product/Product';
 const Dashboard = ({ auth, products, getSellerProducts, history }) => {
   useEffect(() => {
     getSellerProducts(auth.me.id);
-  }, []);
+  }, [products]);
 
   if (!auth.me.isSeller) return <Redirect to="/register-seller" />;
   return (
@@ -20,13 +20,17 @@ const Dashboard = ({ auth, products, getSellerProducts, history }) => {
           <Typography.Text strong>
             <span style={{ color: '#C35600' }}>{auth.me.name}'s </span> Dashboard
           </Typography.Text>
-          <Button danger type="primary" style={{ float: 'right' }} onClick={() => history.push('/seller/product/add-new')}>
+          <Button
+            type="primary"
+            style={{ float: 'right' }}
+            onClick={() => history.push('/seller/product/add-new')}
+          >
             Add New Product
           </Button>
         </span>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {products?.map((product) => (
-            <ProductCard item={product} />
+            <ProductCard key={product._id} item={product} type={'admin'} />
           ))}
         </div>
       </div>
