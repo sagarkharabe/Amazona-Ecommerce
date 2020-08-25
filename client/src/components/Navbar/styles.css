@@ -1,5 +1,5 @@
 nav {
-  background-color: #23303E;
+  background-color: #23303e;
   padding-left: 30px;
   padding-right: 10px;
   height: 60px;
@@ -33,16 +33,19 @@ nav {
   padding: 0px 20px;
   text-decoration: none;
   color: white;
+  font-size: 1.8vh;
   white-space: nowrap;
 }
 
 .nav-item:hover {
-  background-color: white;
+  border-bottom-width: 1.5px;
+  border-bottom-style: solid;
+  border-bottom-color: #fff;
 }
 
-.nav-item:hover a {
+/* .nav-item:hover a {
   color: darkblue;
-}
+} */
 
 .flex-1 {
   flex: 1;

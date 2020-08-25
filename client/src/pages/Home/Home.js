@@ -56,7 +56,7 @@ const Home = ({ products: { products }, getProducts, cartItems }) => {
             <Option value={'asc'}>Price: Lowest to Highest</Option>
             <Option value={'desc'}>Price: Highest to Lowest</Option>
           </Select>
-          <Search placeholder="Search..." onSearch={setNameFilter} style={{ width: 250 }} enterButton />
+          <Search placeholder="Search..." onSearch={setNameFilter} style={{ flex: 1 }} enterButton />
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', paddingTop: 16 }}>
           {filteredProducts.length > 0 ? filteredProducts.map((product) => (
