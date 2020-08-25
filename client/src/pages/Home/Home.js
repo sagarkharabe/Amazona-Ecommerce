@@ -31,46 +31,48 @@ const Home = ({ products: { products }, getProducts, cartItems }) => {
 
   return (
     <Layout>
-      <div className="home-page">
-        <Typography.Title level={2}>Amazona E-Commerce</Typography.Title>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Typography.Text strong>Filter By : &nbsp;</Typography.Text>
-          <Select
-            defaultValue="Select a Category"
-            value={categoryFilter}
-            onChange={setCategoryFilter}
-          >
-            <Option value={''}>All Categories</Option>
-            {categories.map((x) => (
-              <Option value={x}>{x}</Option>
-            ))}
-          </Select>
-          <Search
-            placeholder="Search..."
-            onSearch={setNameFilter}
-            style={{ flex: 1 }}
-            enterButton
-          />
-          <Select
-            defaultValue="Sort Price by"
-            value={priceFilter}
-            onChange={setPriceFilter}
-            style={{ marginRight: 20 }}
-          >
-            <Option value={''}>Sort By: All</Option>
-            <Option value={'asc'}>Price: Lowest to Highest</Option>
-            <Option value={'desc'}>Price: Highest to Lowest</Option>
-          </Select>
+      <div className="home">
+        <div className="home-page">
+          <Typography.Title level={2}>Amazona E-Commerce</Typography.Title>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography.Text strong>Filter By : &nbsp;</Typography.Text>
+            <Select
+              defaultValue="Select a Category"
+              value={categoryFilter}
+              onChange={setCategoryFilter}
+            >
+              <Option value={''}>All Categories</Option>
+              {categories.map((x) => (
+                <Option value={x}>{x}</Option>
+              ))}
+            </Select>
+            <Search
+              placeholder="Search..."
+              onSearch={setNameFilter}
+              style={{ flex: 1 }}
+              enterButton
+            />
+            <Select
+              defaultValue="Sort Price by"
+              value={priceFilter}
+              onChange={setPriceFilter}
+              style={{ marginRight: 20 }}
+            >
+              <Option value={''}>Sort By: All</Option>
+              <Option value={'asc'}>Price: Lowest to Highest</Option>
+              <Option value={'desc'}>Price: Highest to Lowest</Option>
+            </Select>
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', paddingTop: 16 }}>
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => <ProductCard key={product._id} item={product} />)
+            ) : (
+              <Typography.Text strong>No Results found.. &#128533; </Typography.Text>
+            )}
+          </div>
         </div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', paddingTop: 16 }}>
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map((product) => <ProductCard key={product._id} item={product} />)
-          ) : (
-            <Typography.Text strong>No Results found.. &#128533; </Typography.Text>
-          )}
-        </div>
+        {cartItems.length ? <Cart /> : null}
       </div>
-      {cartItems.length ? <Cart /> : null}
     </Layout>
   );
 };

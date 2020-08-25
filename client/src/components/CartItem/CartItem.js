@@ -11,23 +11,32 @@ const CartItem = ({ id, removeFromCart, cartItems }) => {
     <div
       style={{
         margin: 10,
-        paddingBottom: 10,
+        paddingBottom: 20,
+        paddingLeft: 20, 
         borderBottomWidth: '2px',
         borderBottomStyle: 'solid',
         borderBottomColor: '#e5e5e5',
+        height: '100px',
+        width: '100%',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
       }}
     >
-      <img height={'100%'} width="20%" src={item.image} alt={item.name}></img>
+      <img
+        height="auto"
+        width="auto"
+        style={{ maxHeight: '100%', maxWidth: '20%' }}
+        src={item.image}
+        alt={item.name}
+      ></img>
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-end',
-          justifyContent: 'center',
+          justifyContent: 'space-between',
         }}
       >
         <span>{item.name}</span>

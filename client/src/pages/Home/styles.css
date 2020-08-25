@@ -1,8 +1,16 @@
-.home-page .reseed-btn {
-  width: auto;
+.home-page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }
 
 .home-page .name {
   font-size: 20px;
   font-weight: bold;
+}
+
+.home {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
 }

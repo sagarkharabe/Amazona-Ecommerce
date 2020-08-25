@@ -12,27 +12,28 @@ const Cart = ({ auth, cartItems, history }) => {
   return (
     <div
       style={{
-        height: '83%',
-        width: '300px',
-        position: 'fixed',
-        right: 16,
-        top: 90,
+        flex: 0.3,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
+        borderLeftWidth: '1px',
+        borderLeftStyle: 'solid',
+        borderLeftColor: '#e5e5e5',
+        padding: 10,
       }}
     >
-      <Typography.Title level={2} style={{ marginTop: 20 }}>
-        Cart
-      </Typography.Title>
-      {cartItems.map((item) => (
-        <CartItem id={item._id} />
-      ))}
-      <span>Total: Rs{cartItems.reduce((a, c) => a + c.price * c.count, 0)}</span>
-      <Button style={{ margin: 20 }} onClick={onHandleCheckout}>
-        Checkout
-      </Button>
+      <div style={{ position: 'sticky', top: 0, display: 'grid', placeItems: 'center' }}>
+        <Typography.Title level={2}>Cart</Typography.Title>
+        {cartItems.map((item) => (
+          <CartItem id={item._id} />
+        ))}
+        <span>Total: Rs{cartItems.reduce((a, c) => a + c.price * c.count, 0)}</span>
+        <br />
+        <Button style={{ margin: 20 }} onClick={onHandleCheckout}>
+          Checkout
+        </Button>
+      </div>
     </div>
   );
 };
