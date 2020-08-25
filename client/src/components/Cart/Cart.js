@@ -21,6 +21,7 @@ const Cart = ({ auth, cartItems, history }) => {
         borderLeftStyle: 'solid',
         borderLeftColor: '#e5e5e5',
         padding: 10,
+        minWidth: '300px',
       }}
     >
       <div style={{ position: 'sticky', top: 0, display: 'grid', placeItems: 'center' }}>
