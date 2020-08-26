@@ -56,7 +56,10 @@ const Product = ({
 
   const onChangeRating = () => {};
 
-  const onSubmitComment = () => addComment(product, { comment });
+  const onSubmitComment = async () => {
+    addComment(product, { comment });
+    setComment('');
+  };
 
   const productInfo = useMemo(
     () => (
@@ -194,6 +197,7 @@ const Product = ({
 
           {product &&
             product.comments &&
+            product.comments.length > 0 &&
             product.comments.map((x) => (
               <Comment
                 author={<Typography.Text strong>{x.user.name}</Typography.Text>}

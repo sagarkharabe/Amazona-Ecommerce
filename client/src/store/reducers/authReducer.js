@@ -67,7 +67,6 @@ export default function (state = initialState, { type, payload }) {
         appLoaded: true,
       };
     case LOGOUT_SUCCESS:
-    case LOGIN_WITH_USERNAME_FAIL:
       localStorage.removeItem('token');
       return {
         ...state,
@@ -76,6 +75,15 @@ export default function (state = initialState, { type, payload }) {
         isAuthenticated: false,
         isLoading: false,
         error: null, //payload message ovde i razdvoj logout i fail
+      };
+    case LOGIN_WITH_USERNAME_FAIL:
+      return {
+        ...state,
+        token: null,
+        me: null,
+        isAuthenticated: false,
+        isLoading: false,
+        error: payload.error, //payload message ovde i razdvoj logout i fail
       };
     default:
       return state;

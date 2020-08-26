@@ -11,7 +11,6 @@ export const addComment = (product, data) => async (dispatch, getState) => {
       type: ADD_COMMENT_SUCCESS,
       payload: { comment: response.data.data },
     });
-    window.location.reload(false);
   } catch (err) {
     dispatch({
       type: ADD_COMMENT_FAIL,

@@ -79,7 +79,7 @@ export default function (state = initialState, { type, payload }) {
         isAddingComment: false,
         product: {
           ...state.product,
-          comments: state.product.comments.unshift(payload.comment),
+          comments: [payload.comment, ...state.product.comments],
         },
       };
     case ADD_COMMENT_FAIL:
