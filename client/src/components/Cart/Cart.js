@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { toggleCart } from '../../store/actions/cartActions';
 import { openNotificationWithIcon } from '..//Notification/Notification';
 import { withRouter } from 'react-router-dom';
+import { ShoppingCartOutlined } from '@ant-design/icons';
 import CartItem from '../CartItem/CartItem';
 
 const Cart = ({ auth, cart: { cartItems, isHidden, error }, toggleCart, history }) => {
@@ -32,8 +33,8 @@ const Cart = ({ auth, cart: { cartItems, isHidden, error }, toggleCart, history 
   return (
     <Drawer
       title={
-        <Typography.Title level={2} style={{ margin: 0, textAlign: 'center' }}>
-          Cart
+        <Typography.Title level={3} style={{ margin: 0, textAlign: 'center' }}>
+          My Cart <ShoppingCartOutlined />
         </Typography.Title>
       }
       placement="right"
@@ -44,9 +45,9 @@ const Cart = ({ auth, cart: { cartItems, isHidden, error }, toggleCart, history 
       footer={
         <>
           <Typography.Text strong style={{ margin: 20, padding: 10 }}>
-            Total: Rs{cartItems.reduce((a, c) => a + c.price * c.count, 0)}
+            Total: ₹ {cartItems.reduce((a, c) => a + c.price * c.count, 0).toFixed(2)}
           </Typography.Text>
-          <Button style={{ margin: 20 }} onClick={onHandleCheckout}>
+          <Button size="large" style={{ margin: 20 }} onClick={onHandleCheckout}>
             Checkout
           </Button>
         </>

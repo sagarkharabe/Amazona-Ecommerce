@@ -2,7 +2,7 @@ import React from 'react';
 import { removeFromCart } from '../../store/actions/cartActions';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Button } from 'antd';
+import { Button, Typography, Badge } from 'antd';
 
 const CartItem = ({ id, removeFromCart, cartItems }) => {
   const item = cartItems.find((x) => x._id === id);
@@ -12,11 +12,11 @@ const CartItem = ({ id, removeFromCart, cartItems }) => {
       style={{
         margin: 10,
         paddingBottom: 20,
-        paddingLeft: 20, 
+        paddingLeft: 20,
         borderBottomWidth: '2px',
         borderBottomStyle: 'solid',
         borderBottomColor: '#e5e5e5',
-        height: '100px',
+        height: '120px',
         width: '100%',
         overflow: 'hidden',
         display: 'flex',
@@ -27,7 +27,7 @@ const CartItem = ({ id, removeFromCart, cartItems }) => {
       <img
         height="auto"
         width="auto"
-        style={{ maxHeight: '100%', maxWidth: '20%' }}
+        style={{ maxHeight: '100%', maxWidth: '25%' }}
         src={item.image}
         alt={item.name}
       ></img>
@@ -37,13 +37,16 @@ const CartItem = ({ id, removeFromCart, cartItems }) => {
           flexDirection: 'column',
           alignItems: 'flex-end',
           justifyContent: 'space-between',
+          textAlign: 'end',
         }}
       >
-        <span>{item.name}</span>
-        <span>
-          Rs.{item.price} x {item.count}
-        </span>
-        <Button onClick={() => removeFromCart(item)}>Remove</Button>
+        <Typography.Text>{item.name}</Typography.Text>
+        <Typography.Text>
+          ₹ {item.price} x <span style={{ color: '#000', fontWeight: 'bold' }}>{item.count}</span>
+        </Typography.Text>
+        <Button type="danger" onClick={() => removeFromCart(item)}>
+          Remove
+        </Button>
       </div>
     </div>
   );
