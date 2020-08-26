@@ -9,13 +9,13 @@ export const registerSeller = (data, history) => async (dispatch, getState) => {
   try {
     const options = attachTokenToHeaders(getState);
     const response = await axios.put('/api/users/register-seller', data, options);
-    console.log(response.data)
+    console.log(response.data);
     dispatch({
       type: REGISTER_SELLER_SUCCESS,
     });
-    history.push(`/seller/${response.data.data.id}`);
+    history.push(`/seller-dashboard`);
   } catch (err) {
-    console.log(err)
+    console.log(err);
     dispatch({
       type: REGISTER_SELLER_ERROR,
       payload: { error: err?.response?.data.message || err.message },
