@@ -129,7 +129,7 @@ const Product = ({ item, history, auth, addToCart, type, deleteProduct }) => {
                 type="link"
                 onClick={(e) => {
                   e.stopPropagation();
-                  history.push(`/seller/${item.seller}`);
+                  history.push(`/store/${item.seller}`);
                 }}
               >
                 More from seller

@@ -8,15 +8,13 @@ import ProductCard from '../../components/Product/Product';
 import { categories } from '../../constants/categories';
 import { filter } from '../../util/filterProducts';
 import { openNotificationWithIcon } from '../../components/Notification/Notification';
-
 import Layout from '../../layout/Layout';
-
 import './styles.css';
 
 const { Option } = Select;
 const { Search } = Input;
 
-const Home = ({ products: { products, error }, getProducts, cartItems }) => {
+const Home = ({ products: { products, error }, getProducts, removeOneQuantity, cartItems }) => {
   useEffect(() => {
     getProducts();
   }, []);

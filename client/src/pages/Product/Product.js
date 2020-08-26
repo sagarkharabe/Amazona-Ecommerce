@@ -103,7 +103,7 @@ const Product = ({
           <Button
             type={'link'}
             style={{ width: '150px', paddingLeft: 0 }}
-            onClick={() => history.push('/seller/' + product.seller.id)}
+            onClick={() => history.push('/store/' + product.seller.id)}
           >
             More from this seller
           </Button>
