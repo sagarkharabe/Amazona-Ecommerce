@@ -33,7 +33,7 @@ nav {
   padding: 0px 20px;
   text-decoration: none;
   color: white;
-  font-size: 1.8vh;
+  font-size: 20px;
   white-space: nowrap;
 }
 
@@ -51,8 +51,8 @@ nav {
   flex: 1;
 }
 .navbar .avatar {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   align-self: center;
   margin-right: 20px;
   object-fit: cover;
