@@ -50,7 +50,7 @@ export const removeOneQuantity = (product) => (dispatch, getState) => {
       .filter(Boolean);
     dispatch({ type: REMOVE_FROM_CART_SUCCESS, payload: { cartItems } });
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    openNotificationWithIcon({ type: 'success', message: 'removed to cart 😇' });
+    openNotificationWithIcon({ type: 'success', message: 'removed from cart 😇' });
   } catch (err) {
     openNotificationWithIcon({ type: 'error', message: "something's not right 😕" });
     dispatch({
@@ -68,7 +68,7 @@ export const removeFromCart = (product) => (dispatch, getState) => {
       .filter((x) => x._id !== product._id);
     dispatch({ type: REMOVE_FROM_CART_SUCCESS, payload: { cartItems } });
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    openNotificationWithIcon({ type: 'success', message: 'removed to cart 😇' });
+    openNotificationWithIcon({ type: 'success', message: 'removed from cart 😇' });
   } catch (err) {
     openNotificationWithIcon({ type: 'error', message: "something's not right 😕" });
     dispatch({
