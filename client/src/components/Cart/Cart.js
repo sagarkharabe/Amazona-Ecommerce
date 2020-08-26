@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Drawer, Button, Typography } from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
