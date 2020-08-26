@@ -40,6 +40,26 @@ export const addToCart = (product) => (dispatch, getState) => {
   }
 };
 
+export const removeOneQuantity = (product) => (dispatch, getState) => {
+  dispatch({ type: REMOVE_FROM_CART_LOADING });
+  try {
+    const cartItems = getState()
+      .cart.cartItems.map((x) =>
+        x._id === product._id ? (x.count <= 1 ? false : { ...x, count: x.count - 1 }) : x,
+      )
+      .filter(Boolean);
+    dispatch({ type: REMOVE_FROM_CART_SUCCESS, payload: { cartItems } });
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    openNotificationWithIcon({ type: 'success', message: 'removed to cart 😇' });
+  } catch (err) {
+    openNotificationWithIcon({ type: 'error', message: "something's not right 😕" });
+    dispatch({
+      type: REMOVE_FROM_CART_ERROR,
+      payload: err.message,
+    });
+  }
+};
+
 export const removeFromCart = (product) => (dispatch, getState) => {
   dispatch({ type: REMOVE_FROM_CART_LOADING });
   try {

@@ -10,13 +10,12 @@ import { openNotificationWithIcon } from '../../components/Notification/Notifica
 import Cart from '../../components/Cart/Cart';
 
 import Layout from '../../layout/Layout';
-
 import './styles.css';
 
 const { Option } = Select;
 const { Search } = Input;
 
-const Home = ({ products: { products, error }, getProducts, cartItems }) => {
+const Home = ({ products: { products, error }, getProducts, removeOneQuantity, cartItems }) => {
   useEffect(() => {
     getProducts();
   }, []);
