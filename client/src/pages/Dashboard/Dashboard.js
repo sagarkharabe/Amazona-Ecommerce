@@ -28,6 +28,7 @@ const Dashboard = ({ auth, products, getSellerProducts, history }) => {
       <div style={{ padding: 20 }}>
         <Button
           type="primary"
+          size="large"
           style={{ float: 'right' }}
           onClick={() => history.push('/seller/product/add-new')}
         >

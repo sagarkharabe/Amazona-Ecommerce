@@ -1,2 +1,2 @@
 //replace with prod url
-export const GOOGLE_AUTH_LINK = 'https://catalyst-ecommerce.herokuapp.com//auth/google';
+export const GOOGLE_AUTH_LINK = 'http://localhost:5000/auth/google';

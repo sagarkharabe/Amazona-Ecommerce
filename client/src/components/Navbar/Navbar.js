@@ -78,19 +78,21 @@ const Navbar = ({ auth, cartItems, logOutUser, history, toggleCart }) => {
       {homeLink}
       <Menu.Item className="flex-1" />
       {auth.isAuthenticated ? (
-        <Menu.Item className="nav-item" onClick={toggleCart}>
-          <ShoppingCartOutlined style={{ fontSize: '20px' }} />
-          Cart &nbsp;
-          <Badge
-            style={{
-              color: 'white',
-              background: 'rgba(255, 255, 255, 0.4)',
-              borderColor: 'rgba(255, 255, 255, 0.65)',
-              fontSize: '16px',
-            }}
-            count={totalCartItems}
-          />
-        </Menu.Item>
+        onSellersPath ? null : (
+          <Menu.Item className="nav-item" onClick={toggleCart}>
+            <ShoppingCartOutlined style={{ fontSize: '20px' }} />
+            Cart &nbsp;
+            <Badge
+              style={{
+                color: 'white',
+                background: 'rgba(255, 255, 255, 0.4)',
+                borderColor: 'rgba(255, 255, 255, 0.65)',
+                fontSize: '16px',
+              }}
+              count={totalCartItems}
+            />
+          </Menu.Item>
+        )
       ) : (
         <Menu.Item className="nav-item">
           <a href="/login">Login</a>

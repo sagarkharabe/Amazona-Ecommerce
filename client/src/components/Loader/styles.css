@@ -3,8 +3,5 @@
   height: 100%;
   display: flex;
   justify-content: center;
-  /* align-items: center; */
-}
-
-.loader .loader-content {
+  align-items: center;
 }
