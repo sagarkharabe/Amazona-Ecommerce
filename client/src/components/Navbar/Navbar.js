@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Menu, Typography } from 'antd';
-import { CaretDownOutlined } from '@ant-design/icons';
+import { Menu, Typography, Badge } from 'antd';
+import { CaretDownOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { openNotificationWithIcon } from '..//Notification/Notification';
 
 import { logOutUser } from '../../store/actions/authActions';
@@ -11,7 +11,7 @@ import './styles.css';
 
 const { SubMenu } = Menu;
 
-const Navbar = ({ auth, logOutUser, history }) => {
+const Navbar = ({ auth, cartItems, logOutUser, history }) => {
   const onLogOut = () => {
     logOutUser(history);
   };
@@ -36,7 +36,23 @@ const Navbar = ({ auth, logOutUser, history }) => {
         </a>
       </Menu.Item>
       <Menu.Item className="flex-1" />
-      {!auth.isAuthenticated && (
+      {auth.isAuthenticated ? (
+        <Menu.Item className="nav-item">
+          <a href="/cart">
+            <ShoppingCartOutlined style={{ fontSize: '20px' }} />
+            Cart &nbsp;
+            <Badge
+              style={{
+                color: 'white',
+                background: 'rgba(255, 255, 255, 0.4)',
+                borderColor: 'rgba(255, 255, 255, 0.65)',
+                fontSize: '16px',
+              }}
+              count={cartItems.length}
+            />
+          </a>
+        </Menu.Item>
+      ) : (
         <Menu.Item className="nav-item">
           <a href="/login">Login</a>
         </Menu.Item>
@@ -72,6 +88,7 @@ const Navbar = ({ auth, logOutUser, history }) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  cartItems: state.cart.cartItems,
 });
 
 export default compose(withRouter, connect(mapStateToProps, { logOutUser }))(Navbar);

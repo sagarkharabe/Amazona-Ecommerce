@@ -53,6 +53,7 @@ router.put('/:productId', requireJwtAuth, async (req, res) => {
       {
         rate: req.body.rate,
       },
+      { new: true },
     );
     const product = await Product.findById(req.params.productId);
     const allProductRatings = await Rating.find({ product: req.params.productId });

@@ -6,6 +6,7 @@ import {
   REMOVE_FROM_CART_ERROR,
   REMOVE_FROM_CART_SUCCESS,
 } from '../types';
+import { openNotificationWithIcon } from '../../components/Notification/Notification';
 
 export const addToCart = (product) => (dispatch, getState) => {
   dispatch({ type: ADD_TO_CART_LOADING });
@@ -26,7 +27,9 @@ export const addToCart = (product) => (dispatch, getState) => {
       payload: { cartItems },
     });
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    openNotificationWithIcon({ type: 'success', message: 'added to cart 😎' });
   } catch (err) {
+    openNotificationWithIcon({ type: 'error', message: "something's not right 😕" });
     dispatch({
       type: ADD_TO_CART_ERROR,
       payload: err.message,
@@ -42,7 +45,9 @@ export const removeFromCart = (product) => (dispatch, getState) => {
       .filter((x) => x._id !== product._id);
     dispatch({ type: REMOVE_FROM_CART_SUCCESS, payload: { cartItems } });
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    openNotificationWithIcon({ type: 'success', message: 'removed to cart 😇' });
   } catch (err) {
+    openNotificationWithIcon({ type: 'error', message: "something's not right 😕" });
     dispatch({
       type: REMOVE_FROM_CART_ERROR,
       payload: err.message,
