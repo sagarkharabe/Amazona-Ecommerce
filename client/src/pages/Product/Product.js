@@ -7,6 +7,11 @@ import { withRouter } from 'react-router-dom';
 import Layout from '../../layout/Layout';
 import { addToCart } from '../../store/actions/cartActions';
 import { addComment } from '../../store/actions/commentActions';
+import {
+  getUserRatingForProduct,
+  updateUserRatingForProduct,
+  addRating,
+} from '../../store/actions/ratingActions';
 import moment from 'moment';
 import { openNotificationWithIcon } from '../../components/Notification/Notification';
 
@@ -28,33 +33,41 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 const Product = ({
   auth,
   getProduct,
+  getUserRatingForProduct,
+  updateUserRatingForProduct,
+  addRating,
   history,
   match,
   product,
   isAddingComment,
+  addCommentError,
+  userRating,
   addToCart,
   addComment,
 }) => {
   const [comment, setComment] = useState('');
-  const [rate, setrate] = useState(0);
 
   //comment this out if you wnat to stay on this page
   useEffect(() => {
     getProduct(match.params.id, history);
+    getUserRatingForProduct(match.params.id);
   }, []);
 
   useEffect(() => {
-    if (product.error) {
+    if (product.error || addCommentError) {
       openNotificationWithIcon({
         type: 'error',
-        message: product.error,
+        message: product.error || addCommentError,
       });
     }
-  }, [product.error]);
+  }, [product.error, addCommentError]);
 
   const onAddToCart = () => addToCart(product);
 
-  const onChangeRating = () => {};
+  const onChangeRating = (rate) =>
+    userRating
+      ? updateUserRatingForProduct(match.params.id, { rate })
+      : addRating(match.params.id, { rate });
 
   const onSubmitComment = async () => {
     addComment(product, { comment });
@@ -62,41 +75,59 @@ const Product = ({
   };
 
   const productInfo = useMemo(
-    () => (
-      <div style={{ marginBottom: 16 }}>
-        <Typography.Title level={3}>
-          {product.name}
-          <span style={{ fontSize: 12 }}>&nbsp; By</span>{' '}
-          <span style={{ fontSize: 14, color: '#C35600' }}>{product.seller?.storeName}</span>
-        </Typography.Title>
-        <Typography.Text style={{ fontSize: 16 }}>{product.description}</Typography.Text>
-        <br />
-        <br />
-        <Typography.Text strong style={{ fontSize: 14 }}>
-          Brand: {product.brand}
-        </Typography.Text>
-        <br />
-        <Typography.Text strong style={{ fontSize: 14 }}>
-          Category: {product.category}
-        </Typography.Text>
-        <br />
-        <div>
-          <Typography.Text style={{ fontSize: 16 }}>
-            {product.avgRating?.toFixed(1)}{' '}
+    () =>
+      product && (
+        <div style={{ marginBottom: 16 }}>
+          <Typography.Title level={3}>
+            {product.name}
+            <span style={{ fontSize: 12 }}>&nbsp; By</span>{' '}
+            <span style={{ fontSize: 14, color: '#C35600' }}>{product.seller?.storeName}</span>
+          </Typography.Title>
+          <Typography.Text style={{ fontSize: 16 }}>{product.description}</Typography.Text>
+          <br />
+          <br />
+          <Typography.Text strong style={{ fontSize: 14 }}>
+            Brand: {product.brand}
           </Typography.Text>
-          <Rate disabled allowHalf value={product.avgRating} onChange={onChangeRating} />
-          <Typography.Text style={{ fontSize: 16 }}>{` (${product.numRatings})`}</Typography.Text>
+          <br />
+          <Typography.Text strong style={{ fontSize: 14 }}>
+            Category: {product.category}
+          </Typography.Text>
+          <br />
+          <div>
+            <Typography.Text style={{ fontSize: 16 }}>
+              {(product.avgRating || 0).toFixed(1)}{' '}
+            </Typography.Text>
+            <Rate disabled allowHalf value={product.avgRating} onChange={onChangeRating} />
+            <Typography.Text style={{ fontSize: 16 }}>{` (${product.numRatings})`}</Typography.Text>
+          </div>
+          <Button
+            type={'link'}
+            style={{ width: '150px', paddingLeft: 0 }}
+            onClick={() => history.push('/seller/' + product.seller.id)}
+          >
+            More from this seller
+          </Button>
         </div>
-        <Button
-          type={'link'}
-          style={{ width: '150px', paddingLeft: 0 }}
-          onClick={() => history.push('/seller/' + product.seller.id)}
-        >
-          More from this seller
-        </Button>
-      </div>
-    ),
-    [product, auth],
+      ),
+    [product.avgRating, product.numRatings],
+  );
+
+  const userRatingInfo = useMemo(
+    () =>
+      auth.isAuthenticated ? (
+        <div>
+          <Typography.Text strong>Your Ratings &nbsp;</Typography.Text>
+          <Rate allowHalf allowClear value={userRating?.rate || 0} onChange={onChangeRating} />{' '}
+          <Typography.Text strong>{(userRating?.rate || 0).toFixed(1)}</Typography.Text>
+          <br /> <br />
+        </div>
+      ) : (
+        <Typography.Text style={{ color: '#B12705' }}>
+          * You need to be logged in to leave comment or rate this product.
+        </Typography.Text>
+      ),
+    [auth, userRating],
   );
 
   return (
@@ -167,17 +198,7 @@ const Product = ({
           </div>
         </div>
         <div>
-          {!auth.isAuthenticated ? (
-            <Typography.Text style={{ color: '#B12705' }}>
-              * You need to be logged in to leave comment or rate this product.
-            </Typography.Text>
-          ) : (
-            <div>
-              <Typography.Text strong>Rate this product &nbsp;</Typography.Text>
-              <Rate allowHalf allowClear value={rate} onChange={() => onChangeRating()} />
-              <br /> <br />
-            </div>
-          )}
+          {userRatingInfo}
 
           <Typography.Title level={3}>Comments</Typography.Title>
           {auth.isAuthenticated && (
@@ -216,9 +237,18 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   product: state.product.product,
   isAddingComment: state.product.isAddingComment,
+  addCommentError: state.product.addCommentError,
+  userRating: state.product.userRating,
 });
 
 export default compose(
   withRouter,
-  connect(mapStateToProps, { getProduct, addToCart, addComment }),
+  connect(mapStateToProps, {
+    getProduct,
+    addToCart,
+    addComment,
+    addRating,
+    getUserRatingForProduct,
+    updateUserRatingForProduct,
+  }),
 )(Product);
