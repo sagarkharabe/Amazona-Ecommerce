@@ -106,7 +106,7 @@ const CreateProduct = ({ createProduct, product: { isLoading, error }, history }
         <Form.Item name="price" label="Price (Rs)">
           <InputNumber
             size="small"
-            placeholder={20}
+            placeholder={1200}
             min={0.01}
             precision={2}
             inputMode={'decimal'}

@@ -86,8 +86,12 @@ const Product = ({
           <Typography.Text style={{ fontSize: 16 }}>{product.description}</Typography.Text>
           <br />
           <br />
+          <Typography.Text strong style={{ fontSize: 16 }}>
+            Price: <span style={{ color: '#C35600' }}>₹ {product.price?.toFixed(2)}</span>
+          </Typography.Text>
+          <br />
           <Typography.Text strong style={{ fontSize: 14 }}>
-            Brand: {product.brand}
+            Brand: <span style={{ color: '#C35600' }}>{product.brand}</span>
           </Typography.Text>
           <br />
           <Typography.Text strong style={{ fontSize: 14 }}>

@@ -80,8 +80,12 @@ const Product = ({ item, history, auth, addToCart, type, deleteProduct }) => {
         }}
       >
         <Space direction="vertical">
-          <Text strong>Rs.{item.price}</Text>
-          <Text>Brand: {item.brand}</Text>
+          <Text style={{ fontSize: '120%' }} strong>
+            ₹ {item.price?.toFixed(2)}
+          </Text>
+          <Text>
+            Brand: <span style={{ color: '#C35600', fontWeight: 450 }}>{item.brand}</span>
+          </Text>
           <Text style={{ fontWeight: 300 }}>{item.category}</Text>
         </Space>
         {type !== 'admin' && (
