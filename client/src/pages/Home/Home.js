@@ -22,10 +22,11 @@ const Home = ({ products: { products, error }, getProducts, cartItems }) => {
   }, []);
 
   useEffect(() => {
-    openNotificationWithIcon({
-      type: 'error',
-      message: error || 'Oops, Something went wrong!',
-    });
+    if (error)
+      openNotificationWithIcon({
+        type: 'error',
+        message: error || 'Oops, Something went wrong!',
+      });
   }, [error]);
 
   const [categoryFilter, setCategoryFilter] = useState('');
