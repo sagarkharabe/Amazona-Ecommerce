@@ -38,7 +38,6 @@ const Product = ({
   const [comment, setComment] = useState('');
   const [rate, setrate] = useState(0);
 
-  //comment this out if you wnat to stay on this page
   useEffect(() => {
     getProduct(match.params.id, history);
   }, []);

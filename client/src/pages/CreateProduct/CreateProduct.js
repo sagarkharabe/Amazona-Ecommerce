@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import Layout from '../../layout/Layout';
 import { Form, Select, InputNumber, Button, Upload, Input, Typography } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
@@ -7,8 +6,8 @@ import { categories } from '../../constants/categories';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createProduct } from '../../store/actions/productActions';
-import { v4 as uuidv4 } from 'uuid';
 import { withRouter } from 'react-router-dom';
+import { openNotificationWithIcon } from '../../components/Notification/Notification';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -25,25 +24,20 @@ const normFile = (e) => {
   return e && e.fileList;
 };
 
-const CreateProduct = ({ createProduct, product: { isLoading }, history }) => {
+const CreateProduct = ({ createProduct, product: { isLoading, error }, history }) => {
   const [form] = Form.useForm();
-  const [fileList, setFileList] = useState([]);
   const onFinish = (values) => {
-    if (fileList.length) {
-      let formData = new FormData();
-      formData.append('api_key', process.env.REACT_APP_CLOUDINARY_API_KEY);
-      formData.append('file', fileList[0].originFileObj);
-      formData.append('public_id', `${uuidv4()}`);
-      formData.append('timestamp', `${Date.now()}`);
-      formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
-      axios
-        .post(process.env.REACT_APP_CLOUDINARY_UPLOAD_URL, formData)
-        .then((res) => createProduct({ ...values, image: res.data.secure_url }, history))
-        .catch((err) => console.log(err));
-    } else {
-      createProduct(values, history);
-    }
+    createProduct(values, history);
   };
+
+  useEffect(() => {
+    if (error) {
+      openNotificationWithIcon({
+        type: 'error',
+        message: error,
+      });
+    }
+  }, [error]);
 
   const initialState = {
     name: '',
@@ -129,15 +123,16 @@ const CreateProduct = ({ createProduct, product: { isLoading }, history }) => {
           label="Upload"
           valuePropName="fileList"
           getValueFromEvent={normFile}
+          hasFeedback
+          rules={[{ type: 'array', len: 1, message: 'Upload 1 image!' }]}
         >
           <Upload
             name="image"
             action={process.env.CLOUDINARY_UPLOAD_URL}
             listType="picture"
-            onChange={(info) => setFileList(info.fileList)}
             beforeUpload={() => false}
           >
-            <Button disabled={fileList.length === 1}>
+            <Button>
               <UploadOutlined /> Click to upload
             </Button>
           </Upload>

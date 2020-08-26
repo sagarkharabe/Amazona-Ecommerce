@@ -14,6 +14,7 @@ import {
   EDIT_PRODUCT_LOADING,
   EDIT_PRODUCT_SUCCESS,
 } from '../types';
+import { uploadImage } from '../../util/uploadImage';
 
 export const getProduct = (id, history) => async (dispatch, getState) => {
   dispatch({
@@ -43,8 +44,13 @@ export const createProduct = (product, history) => async (dispatch, getState) =>
     type: CREATE_PRODUCT_LOADING,
   });
   try {
+    let imageUrl = '';
+    if (product.image[0]) {
+      const response = await uploadImage(product.image[0].originFileObj);
+      imageUrl = response.data.secure_url;
+    }
     const options = attachTokenToHeaders(getState);
-    const response = await axios.post('/api/products/ss', product, options);
+    const response = await axios.post('/api/products', { ...product, image: imageUrl }, options);
     dispatch({
       type: CREATE_PRODUCT_SUCCESS,
       payload: response.data.data,
@@ -77,13 +83,23 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
   }
 };
 
-export const editProduct = (id, product, history) => async (dispatch, getState) => {
+export const editProduct = (product, history) => async (dispatch, getState) => {
   dispatch({
     type: EDIT_PRODUCT_LOADING,
   });
   try {
+    const id = getState().product.product._id;
+    let imageUrl = getState().product.product.image;
+    if (product.image[0]) {
+      const response = await uploadImage(product.image[0].originFileObj);
+      imageUrl = response.data.secure_url;
+    }
     const options = attachTokenToHeaders(getState);
-    const response = await axios.put(`/api/products/${id}`, product, options);
+    const response = await axios.put(
+      `/api/products/${id}`,
+      { ...product, image: imageUrl },
+      options,
+    );
     dispatch({
       type: EDIT_PRODUCT_SUCCESS,
       payload: response.data.data,

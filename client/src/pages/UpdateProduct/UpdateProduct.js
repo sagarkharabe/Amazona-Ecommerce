@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import Layout from '../../layout/Layout';
 import { Form, Select, InputNumber, Button, Upload, Input, Typography } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
@@ -7,8 +6,9 @@ import { categories } from '../../constants/categories';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { editProduct, getProduct } from '../../store/actions/productActions';
-import { v4 as uuidv4 } from 'uuid';
 import { withRouter } from 'react-router-dom';
+import { openNotificationWithIcon } from '../../components/Notification/Notification';
+import _ from 'lodash';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -27,7 +27,7 @@ const normFile = (e) => {
 
 const UpdateProduct = ({
   editProduct,
-  product: { isLoading, product },
+  product: { isLoading, product, error },
   history,
   getProduct,
   match,
@@ -37,18 +37,26 @@ const UpdateProduct = ({
   }, []);
   const [form] = Form.useForm();
 
+  useEffect(() => {
+    if (error) {
+      openNotificationWithIcon({
+        type: 'error',
+        message: error,
+      });
+    }
+  }, [error]);
+
   const onFinish = (values) => {
-    let formData = new FormData();
-    formData.append('api_key', process.env.REACT_APP_CLOUDINARY_API_KEY);
-    formData.append('file', values.image[0].originFileObj);
-    formData.append('public_id', `${uuidv4()}`);
-    formData.append('timestamp', `${Date.now()}`);
-    formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
-    axios
-      .post(process.env.REACT_APP_CLOUDINARY_UPLOAD_URL, formData)
-      .then((res) => editProduct(product._id, { ...values, image: res.data.secure_url }, history))
-      .catch((err) => console.log(err));
+    if (_.isEqual(values, initialState)) {
+      openNotificationWithIcon({
+        type: 'warning',
+        message: "You haven't changed any information, are you sure you want to update?",
+      });
+    } else {
+      editProduct(values, history);
+    }
   };
+
   const initialState = {
     name: product?.name || '',
     category: product?.category || 'Others',
@@ -63,7 +71,9 @@ const UpdateProduct = ({
   }, [initialState]);
   return (
     <Layout>
-      <Typography.Title level={3}>Update Product</Typography.Title>
+      <Typography.Title level={3} style={{ textAlign: 'center' }}>
+        Update Product
+      </Typography.Title>
       <div
         style={{
           width: '500px',
@@ -111,7 +121,7 @@ const UpdateProduct = ({
             listType="picture"
             beforeUpload={() => false}
           >
-            <Button disabled={false}>
+            <Button>
               <EditOutlined /> Change Image
             </Button>
           </Upload>
