@@ -42,12 +42,20 @@ const Home = ({ products: { products, error }, getProducts, cartItems }) => {
       <div className="home">
         <div className="home-page">
           <Typography.Title level={2}>Amazona E-Commerce</Typography.Title>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              width: 1000,
+            }}
+          >
             <Typography.Text strong>Filter By : &nbsp;</Typography.Text>
             <Select
               defaultValue="Select a Category"
               value={categoryFilter}
               onChange={setCategoryFilter}
+              style={{ width: 200 }}
             >
               <Option value={''}>All Categories</Option>
               {categories.map((x) => (
@@ -57,14 +65,14 @@ const Home = ({ products: { products, error }, getProducts, cartItems }) => {
             <Search
               placeholder="Search..."
               onSearch={setNameFilter}
-              style={{ flex: 1 }}
+              style={{ width: 400 }}
               enterButton
             />
             <Select
               defaultValue="Sort Price by"
               value={priceFilter}
               onChange={setPriceFilter}
-              style={{ marginRight: 20 }}
+              style={{ marginRight: 20, width: 200 }}
             >
               <Option value={''}>Sort By: All</Option>
               <Option value={'asc'}>Price: Lowest to Highest</Option>
