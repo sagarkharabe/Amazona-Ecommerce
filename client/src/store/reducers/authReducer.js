@@ -68,13 +68,14 @@ export default function (state = initialState, { type, payload }) {
       };
     case LOGOUT_SUCCESS:
       localStorage.removeItem('token');
+      localStorage.removeItem('cartItems');
       return {
         ...state,
         token: null,
         me: null,
         isAuthenticated: false,
         isLoading: false,
-        error: null, //payload message ovde i razdvoj logout i fail
+        error: null,
       };
     case LOGIN_WITH_USERNAME_FAIL:
       return {
@@ -83,7 +84,7 @@ export default function (state = initialState, { type, payload }) {
         me: null,
         isAuthenticated: false,
         isLoading: false,
-        error: payload.error, //payload message ovde i razdvoj logout i fail
+        error: payload.error,
       };
     default:
       return state;
