@@ -42,6 +42,7 @@ const RegisterSeller = ({ auth, history, registerSeller }) => {
         <div>
           <Button
             type={'primary'}
+            size={'large'}
             type={'submit'}
             disabled={storeName === ''}
             onClick={handleSubmit}

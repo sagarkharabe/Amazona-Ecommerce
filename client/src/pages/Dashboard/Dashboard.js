@@ -47,7 +47,7 @@ const Dashboard = ({ auth, products, getSellerProducts, history }) => {
             <ProductCard key={product._id} item={product} type={'admin'} />
           ))
         ) : (
-          <Typography.Text strong>No Results found.. &#128533; </Typography.Text>
+          <Typography.Text strong>You don't have any products yet.. &#128533; </Typography.Text>
         )}
       </div>
     </Layout>
