@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -12,9 +12,15 @@ import './styles.css';
 const { SubMenu } = Menu;
 
 const Navbar = ({ auth, cartItems, logOutUser, history }) => {
+  const [onSellersPath, setonSellersPath] = useState(false);
+
   const onLogOut = () => {
     logOutUser(history);
   };
+
+  useEffect(() => {
+    setonSellersPath(window.location.pathname.includes('seller'));
+  }, []);
 
   useEffect(() => {
     if (auth.error) {
@@ -26,15 +32,45 @@ const Navbar = ({ auth, cartItems, logOutUser, history }) => {
     }
   }, [auth.error]);
 
+  const homeLink = useMemo(
+    () =>
+      onSellersPath ? (
+        <Menu.Item className="nav-item">
+          <a href="/seller-dashboard">
+            <Typography.Title level={4} style={{ color: '#fff' }}>
+              Amazona's Seller
+            </Typography.Title>
+          </a>
+        </Menu.Item>
+      ) : (
+        <Menu.Item className="nav-item">
+          <a href="/">
+            <Typography.Title level={4} style={{ color: '#fff' }}>
+              AMAZONA
+            </Typography.Title>
+          </a>
+        </Menu.Item>
+      ),
+    [onSellersPath],
+  );
+
+  const crossRoleLink = useMemo(
+    () =>
+      onSellersPath ? (
+        <Menu.Item className="subnav-item">
+          <a href="/"> Back To Amazona</a>
+        </Menu.Item>
+      ) : (
+        <Menu.Item className="subnav-item">
+          <a href="/seller-dashboard"> Seller Dashboard</a>
+        </Menu.Item>
+      ),
+    [onSellersPath],
+  );
+
   return (
     <Menu theme="dark" className="navbar flex-1" mode="horizontal">
-      <Menu.Item className="nav-item">
-        <a href="/">
-          <Typography.Title level={4} style={{ color: '#fff' }}>
-            AMAZONA
-          </Typography.Title>
-        </a>
-      </Menu.Item>
+      {homeLink}
       <Menu.Item className="flex-1" />
       {auth.isAuthenticated ? (
         <Menu.Item className="nav-item">
@@ -67,9 +103,7 @@ const Navbar = ({ auth, cartItems, logOutUser, history }) => {
           }
         >
           {auth.me?.isSeller ? (
-            <Menu.Item className="subnav-item">
-              <a href="/seller-dashboard"> Seller Dashboard</a>
-            </Menu.Item>
+            crossRoleLink
           ) : (
             <Menu.Item className="subnav-item">
               <a href="/register-seller">Register as Seller</a>
