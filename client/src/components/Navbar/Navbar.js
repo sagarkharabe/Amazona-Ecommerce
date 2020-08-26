@@ -13,7 +13,7 @@ const { SubMenu } = Menu;
 
 const Navbar = ({ auth, cartItems, logOutUser, history }) => {
   const [onSellersPath, setonSellersPath] = useState(false);
-
+  const [totalCartItems, settotalCartItems] = useState(0);
   const onLogOut = () => {
     logOutUser(history);
   };
@@ -21,6 +21,10 @@ const Navbar = ({ auth, cartItems, logOutUser, history }) => {
   useEffect(() => {
     setonSellersPath(window.location.pathname.includes('seller'));
   }, []);
+
+  useEffect(() => {
+    settotalCartItems(cartItems.reduce((t, i) => t + i.count, 0));
+  }, [cartItems]);
 
   useEffect(() => {
     if (auth.error) {
@@ -84,7 +88,7 @@ const Navbar = ({ auth, cartItems, logOutUser, history }) => {
                 borderColor: 'rgba(255, 255, 255, 0.65)',
                 fontSize: '16px',
               }}
-              count={cartItems.length}
+              count={totalCartItems}
             />
           </a>
         </Menu.Item>
