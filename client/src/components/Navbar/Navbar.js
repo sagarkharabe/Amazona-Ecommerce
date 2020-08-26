@@ -4,14 +4,15 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Menu, Typography, Badge } from 'antd';
 import { CaretDownOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { openNotificationWithIcon } from '..//Notification/Notification';
+import { openNotificationWithIcon } from '../Notification/Notification';
+import { toggleCart } from '../../store/actions/cartActions';
 
 import { logOutUser } from '../../store/actions/authActions';
 import './styles.css';
 
 const { SubMenu } = Menu;
 
-const Navbar = ({ auth, cartItems, logOutUser, history }) => {
+const Navbar = ({ auth, cartItems, logOutUser, history, toggleCart }) => {
   const [onSellersPath, setonSellersPath] = useState(false);
 
   const onLogOut = () => {
@@ -73,20 +74,18 @@ const Navbar = ({ auth, cartItems, logOutUser, history }) => {
       {homeLink}
       <Menu.Item className="flex-1" />
       {auth.isAuthenticated ? (
-        <Menu.Item className="nav-item">
-          <a href="/cart">
-            <ShoppingCartOutlined style={{ fontSize: '20px' }} />
-            Cart &nbsp;
-            <Badge
-              style={{
-                color: 'white',
-                background: 'rgba(255, 255, 255, 0.4)',
-                borderColor: 'rgba(255, 255, 255, 0.65)',
-                fontSize: '16px',
-              }}
-              count={cartItems.length}
-            />
-          </a>
+        <Menu.Item className="nav-item" onClick={toggleCart}>
+          <ShoppingCartOutlined style={{ fontSize: '20px' }} />
+          Cart &nbsp;
+          <Badge
+            style={{
+              color: 'white',
+              background: 'rgba(255, 255, 255, 0.4)',
+              borderColor: 'rgba(255, 255, 255, 0.65)',
+              fontSize: '16px',
+            }}
+            count={cartItems.length}
+          />
         </Menu.Item>
       ) : (
         <Menu.Item className="nav-item">
@@ -125,4 +124,4 @@ const mapStateToProps = (state) => ({
   cartItems: state.cart.cartItems,
 });
 
-export default compose(withRouter, connect(mapStateToProps, { logOutUser }))(Navbar);
+export default compose(withRouter, connect(mapStateToProps, { logOutUser, toggleCart }))(Navbar);

@@ -2,12 +2,12 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Typography, Input, Select } from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import Cart from '../../components/Cart/Cart';
 import { getProducts } from '../../store/actions/productsActions';
 import ProductCard from '../../components/Product/Product';
 import { categories } from '../../constants/categories';
 import { filter } from '../../util/filterProducts';
 import { openNotificationWithIcon } from '../../components/Notification/Notification';
+import Cart from '../../components/Cart/Cart';
 
 import Layout from '../../layout/Layout';
 
@@ -88,7 +88,7 @@ const Home = ({ products: { products, error }, getProducts, cartItems }) => {
             )}
           </div>
         </div>
-        {cartItems.length ? <Cart /> : null}
+        <Cart />
       </div>
     </Layout>
   );

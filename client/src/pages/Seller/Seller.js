@@ -25,7 +25,7 @@ const Seller = ({ seller, products, getSellerProducts, cartItems, match }) => {
           ))}
         </div>
       </div>
-      {cartItems.length ? <Cart /> : null}
+      <Cart />
     </Layout>
   );
 };

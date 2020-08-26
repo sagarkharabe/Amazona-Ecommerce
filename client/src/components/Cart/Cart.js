@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
-import { Button, Typography } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Drawer, Button, Typography } from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { toggleCart } from '../../store/actions/cartActions';
+import { openNotificationWithIcon } from '..//Notification/Notification';
 import { withRouter } from 'react-router-dom';
 import CartItem from '../CartItem/CartItem';
-import { openNotificationWithIcon } from '..//Notification/Notification';
 
-const Cart = ({ auth, cartItems, history }) => {
+const Cart = ({ auth, cart: { cartItems, isHidden, error }, toggleCart, history }) => {
   const onHandleCheckout = () => {
     auth.isAuthenticated ? console.log('allow checkout') : history.push('/login');
   };
@@ -20,39 +21,48 @@ const Cart = ({ auth, cartItems, history }) => {
     }
   }, [auth.error]);
 
+  useEffect(() => {
+    if (error) {
+      openNotificationWithIcon({
+        type: 'error',
+        message: error,
+      });
+    }
+  }, [error]);
   return (
-    <div
-      style={{
-        flex: 0.3,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        borderLeftWidth: '1px',
-        borderLeftStyle: 'solid',
-        borderLeftColor: '#e5e5e5',
-        padding: 10,
-        minWidth: '300px',
-      }}
+    <Drawer
+      title={
+        <Typography.Title level={2} style={{ margin: 0, textAlign: 'center' }}>
+          Cart
+        </Typography.Title>
+      }
+      placement="right"
+      closable={true}
+      onClose={toggleCart}
+      visible={!isHidden}
+      width="400px"
+      footer={
+        <>
+          <Typography.Text strong style={{ margin: 20, padding: 10 }}>
+            Total: Rs{cartItems.reduce((a, c) => a + c.price * c.count, 0)}
+          </Typography.Text>
+          <Button style={{ margin: 20 }} onClick={onHandleCheckout}>
+            Checkout
+          </Button>
+        </>
+      }
+      footerStyle={{ display: 'flex', justifyContent: 'space-between' }}
     >
-      <div style={{ position: 'sticky', top: 0, display: 'grid', placeItems: 'center' }}>
-        <Typography.Title level={2}>Cart</Typography.Title>
-        {cartItems.map((item) => (
-          <CartItem id={item._id} />
-        ))}
-        <span>Total: Rs{cartItems.reduce((a, c) => a + c.price * c.count, 0)}</span>
-        <br />
-        <Button style={{ margin: 20 }} onClick={onHandleCheckout}>
-          Checkout
-        </Button>
-      </div>
-    </div>
+      {cartItems.map((item) => (
+        <CartItem id={item._id} />
+      ))}
+    </Drawer>
   );
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  cartItems: state.cart.cartItems,
+  cart: state.cart,
 });
 
-export default compose(withRouter, connect(mapStateToProps))(Cart);
+export default compose(withRouter, connect(mapStateToProps, { toggleCart }))(Cart);

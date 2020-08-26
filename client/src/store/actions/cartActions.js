@@ -5,6 +5,9 @@ import {
   REMOVE_FROM_CART_LOADING,
   REMOVE_FROM_CART_ERROR,
   REMOVE_FROM_CART_SUCCESS,
+  TOGGLE_CART_LOADING,
+  TOGGLE_CART_SUCCESS,
+  TOGGLE_CART_ERROR,
 } from '../types';
 import { openNotificationWithIcon } from '../../components/Notification/Notification';
 
@@ -52,5 +55,15 @@ export const removeFromCart = (product) => (dispatch, getState) => {
       type: REMOVE_FROM_CART_ERROR,
       payload: err.message,
     });
+  }
+};
+
+export const toggleCart = () => (dispatch, getState) => {
+  dispatch({ type: TOGGLE_CART_LOADING });
+  try {
+    const currentState = getState().cart.isHidden;
+    dispatch({ type: TOGGLE_CART_SUCCESS, payload: !currentState });
+  } catch (err) {
+    dispatch({ type: TOGGLE_CART_ERROR, payload: err });
   }
 };

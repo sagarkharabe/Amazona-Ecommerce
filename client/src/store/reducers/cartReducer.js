@@ -5,12 +5,16 @@ import {
   REMOVE_FROM_CART_LOADING,
   REMOVE_FROM_CART_ERROR,
   REMOVE_FROM_CART_SUCCESS,
+  TOGGLE_CART_ERROR,
+  TOGGLE_CART_LOADING,
+  TOGGLE_CART_SUCCESS,
 } from '../types';
 
 const initialState = {
   cartItems: JSON.parse(localStorage.getItem('cartItems') || '[]'),
   isLoading: false,
   error: null,
+  isHidden: true,
 };
 
 export default function (state = initialState, action) {
@@ -42,6 +46,25 @@ export default function (state = initialState, action) {
         ...state,
         isLoading: false,
         error: action.payload,
+      };
+    case TOGGLE_CART_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
+    case TOGGLE_CART_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+    case TOGGLE_CART_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        isHidden: action.payload,
+        error: null,
       };
     default:
       return state;

@@ -14,6 +14,7 @@ import {
 } from '../../store/actions/ratingActions';
 import moment from 'moment';
 import { openNotificationWithIcon } from '../../components/Notification/Notification';
+import Cart from '../../components/Cart/Cart';
 
 const { TextArea } = Input;
 
@@ -228,6 +229,7 @@ const Product = ({
             ))}
         </div>
       </div>
+      <Cart />
     </Layout>
   );
 };
