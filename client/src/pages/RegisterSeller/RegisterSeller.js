@@ -14,7 +14,7 @@ const RegisterSeller = ({ auth, history, registerSeller }) => {
     registerSeller({ storeName }, history);
   };
   if (!auth.isAuthenticated) return <Redirect to="/" />;
-  else if (auth.me.isSeller) return <Redirect to={`/seller/${auth.me.id}`} />;
+  else if (auth.me.isSeller) return <Redirect to={`/seller-dashboard`} />;
   return (
     <Layout>
       <div
