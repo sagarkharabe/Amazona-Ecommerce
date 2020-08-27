@@ -14,6 +14,7 @@ import {
 } from '../../store/actions/ratingActions';
 import moment from 'moment';
 import { openNotificationWithIcon } from '../../components/Notification/Notification';
+import Loader from '../../components/Loader/Loader';
 import Cart from '../../components/Cart/Cart';
 
 const { TextArea } = Input;
@@ -40,6 +41,7 @@ const Product = ({
   history,
   match,
   product,
+  isLoading,
   isAddingComment,
   addCommentError,
   userRating,
@@ -134,7 +136,9 @@ const Product = ({
     [auth, userRating],
   );
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Layout>
       <div
         style={{
@@ -240,6 +244,7 @@ const Product = ({
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  isLoading: state.product.isLoading,
   product: state.product.product,
   isAddingComment: state.product.isAddingComment,
   addCommentError: state.product.addCommentError,
