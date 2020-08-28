@@ -23,7 +23,7 @@ import {
 import { openNotificationWithIcon } from '../../components/Notification/Notification';
 
 const initialState = {
-  product: {},
+  product: null,
   userRating: null,
   isLoading: false,
   isAddingComment: false,
