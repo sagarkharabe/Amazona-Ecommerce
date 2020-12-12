@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Rate, Comment, Avatar, Form, Button, Input, Card, Typography } from 'antd';
+import ArrowLeftOutlined from '@ant-design/icons/ArrowLeftOutlined';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getProduct } from '../../store/actions//productActions';
@@ -65,6 +66,10 @@ const Product = ({
   }, [product, addCommentError]);
 
   const onAddToCart = () => addToCart(product);
+
+  const goBack = () => {
+    history.goBack();
+  };
 
   const onChangeRating = (rate) =>
     userRating
@@ -238,6 +243,14 @@ const Product = ({
           alignItems: 'stretch',
         }}
       >
+        <Button
+          onClick={goBack}
+          icon={<ArrowLeftOutlined />}
+          style={{ alignSelf: 'flex-start' }}
+          type="link"
+        >
+          Back to Results
+        </Button>
         <div>
           {productInfoRow}
           {userRatingInfo}
